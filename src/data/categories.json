@@ -1,0 +1,16 @@
+[
+  { "id": 1, "route": "business", "name": "Бизнес-книги", "count": 2 },
+  { "id": 2, "route": "detective", "name": "Детективы", "count": 2 },
+  { "id": 3, "route": "children", "name": "Детские книги", "count": 2 },
+  { "id": 4, "route": "foreign", "name": "Зарубежная литература", "count": 2 },
+  { "id": 5, "route": "history", "name": "История", "count": 2 },
+  { "id": 6, "route": "classic", "name": "Классическая литература", "count": 2 },
+  { "id": 7, "route": "psychology", "name": "Книги по психологии", "count": 2 },
+  { "id": 8, "route": "computers", "name": "Компьютерная литература", "count": 2 },
+  { "id": 9, "route": "culture", "name": "Культура и искусство", "count": 2 },
+  { "id": 10, "route": "science", "name": "Наука и образование", "count": 2 },
+  { "id": 11, "route": "publicistic", "name": "Публицистическая литература", "count": 2 },
+  { "id": 12, "route": "references", "name": "Справочники", "count": 2 },
+  { "id": 13, "route": "scifi", "name": "Фантастика", "count": 2 },
+  { "id": 14, "route": "humor", "name": "Юмористическая литература", "count": 2 }
+]

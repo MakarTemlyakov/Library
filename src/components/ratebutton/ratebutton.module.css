@@ -1,0 +1,43 @@
+.rateButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #ffffff;
+  box-shadow: 0px 2px 4px rgba(191, 196, 201, 0.2), 0px 3px 4px rgba(191, 196, 201, 0.18),
+    0px 1px 5px rgba(191, 196, 201, 0.24);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  color: #a7a7a7;
+  margin-right: 217px;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .rateButton {
+    margin-right: 108px;
+  }
+}
+
+@media (max-width: 320px) {
+  .rateButton {
+    width: 32px;
+    height: 32px;
+    padding: 8px;
+  }
+  .rateButton svg {
+    width: 16px;
+    height: 16px;
+  }
+  .rateText {
+    display: none;
+  }
+
+  .hidden {
+    display: none;
+  }
+}

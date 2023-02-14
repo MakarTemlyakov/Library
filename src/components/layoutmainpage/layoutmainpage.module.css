@@ -1,0 +1,19 @@
+.rowWrapper {
+  display: grid;
+  grid-template-columns: 255px auto;
+  grid-auto-flow: column;
+  gap: 30px;
+  padding: 62px 0;
+  height: 100%;
+}
+
+@media (max-width: 768px) {
+  .rowWrapper {
+    display: grid;
+    grid-template-columns: auto;
+    grid-auto-flow: column;
+    gap: 30px;
+    padding: 62px 0;
+    height: 100%;
+  }
+}

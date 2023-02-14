@@ -1,0 +1,38 @@
+.bookList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.bookListHidden {
+  display: none;
+}
+
+.bookListItem {
+  margin-left: 20px;
+  color: #363636;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  padding: 0 4px;
+}
+
+.bookCount {
+  color: #a7a7a7;
+  font-size: 14px;
+  line-height: 24px;
+  font-weight: 400;
+}
+
+.active {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 28px;
+  color: #f8640a;
+}
+
+.booksHidden {
+  display: none;
+}

@@ -1,0 +1,57 @@
+.title {
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 40px;
+  color: #363636;
+}
+
+.listTerms {
+  list-style: none;
+  counter-reset: li;
+}
+
+.listTerms li:not(li > h2) {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #363636;
+}
+
+.listTerms li:before {
+  counter-increment: li;
+  content: counters(li, '.') '. ';
+}
+
+.ruleItemTitle {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: #363636;
+  display: inline;
+}
+
+li > .listTerms {
+  margin-top: 16px;
+  padding-left: 30px;
+}
+
+.listTerms > li:not(:last-of-type) {
+  margin-bottom: 16px;
+}
+
+.mainList > li {
+  margin-top: 32px;
+}
+
+.mainList > li:not(:last-of-type)::before {
+  color: #363636;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+@media (max-width: 320px) {
+  .listTerms li:not(li > h2) {
+    font-size: 15px;
+  }
+}

@@ -1,0 +1,73 @@
+.menu {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 42px;
+}
+
+.menuTab {
+  position: relative;
+  color: #363636;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 28px;
+}
+
+.active {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 28px;
+  color: #f8640a;
+}
+
+.menuTabLink.active {
+  color: #f8640a;
+}
+
+.menuTabLink.active:after {
+  content: '';
+  display: block;
+  animation-name: slideIn;
+  animation-duration: 0.3s;
+  height: 1px;
+  background: #f8640a;
+  margin-top: 8px;
+}
+
+.menuTabLink {
+  display: block;
+}
+
+.menuTab > a > .button {
+  display: none;
+}
+
+.menuTab > .menuTabLink.active > .button {
+  display: inline-block;
+}
+
+@keyframes slideIn {
+  from {
+    width: 0%;
+  }
+
+  to {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .mainNavigation {
+    display: none;
+  }
+}
+
+@keyframes slideIn {
+  0% {
+    left: -999px;
+  }
+
+  100% {
+    left: 64px;
+  }
+}

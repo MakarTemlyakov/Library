@@ -1,0 +1,66 @@
+.button {
+  border: transparent;
+  background: transparent;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.button:hover {
+  background: transparent;
+  border: none;
+  box-shadow: 0px 0px 0px transparent;
+}
+
+.button path {
+  transition: 0.3s all ease-in;
+  transform-origin: center;
+}
+
+.bookLinkWrapper {
+  position: relative;
+}
+
+.button.buttonActive path {
+  transform-origin: 50% 50%;
+  transform: rotate(180deg);
+}
+
+.menuTabLink.active:after {
+  content: '';
+  display: block;
+  animation-name: slideIn;
+  animation-duration: 0.3s;
+  height: 1px;
+  background: #f8640a;
+  margin-top: 8px;
+}
+
+.active {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 28px;
+  color: #f8640a;
+}
+
+.menuTabLink.active {
+  color: #f8640a;
+}
+
+.arrow {
+  fill: #000000;
+}
+
+.arrow.activeArrow {
+  fill: #f8640a;
+}
+
+.menuTabLink.active .arrow.activeArrow,
+.menuTabLink.active .arrow {
+  fill: #f8640a;
+}
+
+.menuTabLink:not(.active):hover .arrow {
+  fill: #ff5253;
+}

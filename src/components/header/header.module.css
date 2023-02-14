@@ -1,0 +1,151 @@
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.socialIcon object svg path {
+  fill: red;
+}
+
+.burgerMenuWrapper {
+  display: none;
+}
+
+.header {
+  margin-top: 32px;
+}
+
+.logoName {
+  font-size: 22px;
+  font-weight: 700;
+  margin-left: 8px;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 40px;
+  margin-right: auto;
+  margin-left: 120px;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.userInfo {
+  margin-right: 14px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.userAvatar {
+  border-radius: 50%;
+  width: 58px;
+  height: 58px;
+}
+
+.rowWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 0;
+}
+
+@media (max-width: 768px) {
+  .logo {
+    display: none;
+  }
+
+  .title {
+    margin-left: 24px;
+  }
+
+  .user {
+    display: none;
+  }
+
+  .burgerMenu {
+    display: block;
+  }
+
+  .burgerMenuWrapper {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    align-items: center;
+    width: 27px;
+    height: 3px;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+  }
+
+  .burgerMenuWrapper.burgerMenuWrapperActive span {
+    background: transparent;
+  }
+
+  .burgerMenuWrapper.burgerMenuWrapperActive span::after,
+  .burgerMenuWrapper.burgerMenuWrapperActive span::before {
+    background: linear-gradient(231.58deg, #f83600 -53.35%, #f9d423 297.76%);
+    transition: 0.3s all ease-in;
+    width: 22px;
+  }
+
+  .burgerMenuWrapper.burgerMenuWrapperActive span::after {
+    transform-origin: right top;
+    transform: rotate(45deg);
+  }
+  .burgerMenuWrapper.burgerMenuWrapperActive span::before {
+    transform-origin: right bottom;
+    transform: rotate(-45deg);
+  }
+
+  .burgerMenuWrapper:hover {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+  }
+
+  .burgerMenuWrapper span,
+  .burgerMenuWrapper span:after,
+  .burgerMenuWrapper span::before {
+    display: block;
+    position: absolute;
+    width: 27px;
+    height: 3px;
+    background: #363636;
+    transition: 0.3s all ease-in-out;
+  }
+
+  .burgerMenuWrapper span::before {
+    content: '';
+    top: -8px;
+    transform-origin: right bottom;
+    transform: rotate(0deg);
+  }
+
+  .burgerMenuWrapper span:after {
+    content: '';
+    top: 8px;
+    transform-origin: right top;
+    transform: rotate(0deg);
+  }
+}
+
+@media (max-width: 320px) {
+  .title {
+    font-size: 18px;
+    line-height: 28px;
+  }
+  .burgerMenuWrapper,
+  .burgerMenuWrapper span,
+  .burgerMenuWrapper span:after,
+  .burgerMenuWrapper span::before {
+    width: 20px;
+    height: 2px;
+  }
+}

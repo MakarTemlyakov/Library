@@ -1,0 +1,55 @@
+.viewTypeTileButton,
+.viewTypeListButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 38px;
+  width: 38px;
+  border-radius: 50%;
+  border: transparent;
+  filter: drop-shadow(0px 2px 4px rgba(191, 196, 201, 0.2)) drop-shadow(0px 3px 4px rgba(191, 196, 201, 0.18))
+    drop-shadow(0px 1px 5px rgba(191, 196, 201, 0.24));
+  box-shadow: 0px 2px 4px rgba(191, 196, 201, 0.2), 0px 3px 4px rgba(191, 196, 201, 0.18),
+    0px 1px 5px rgba(191, 196, 201, 0.24);
+  background: #ffffff;
+  cursor: pointer;
+}
+
+.viewTypeTileButton svg path,
+.viewTypeListButton svg path {
+  fill: rgb(167, 167, 167);
+  transition: 0.3s fill ease-in;
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  clip: rect(0 0 0 0);
+}
+
+.viewTypeTileButton.activeView svg path,
+.viewTypeListButton.activeView svg path {
+  fill: #ffffff;
+}
+
+.activeView {
+  background: linear-gradient(231.58deg, #f83600 -53.35%, #f9d423 297.76%);
+}
+
+@media (max-width: 320px) {
+  .viewTypeTileButton,
+  .viewTypeListButton {
+    width: 32px;
+    height: 32px;
+    padding: 8px;
+  }
+
+  .hiddenButton {
+    display: none;
+  }
+}

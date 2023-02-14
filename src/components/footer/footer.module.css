@@ -1,0 +1,52 @@
+.copyRight {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+}
+
+.rowWrapper {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid #bfc4c9;
+  padding: 16px 0;
+}
+
+.social {
+  display: flex;
+  gap: 24px;
+}
+
+.socialItem {
+  display: block;
+}
+
+.socialLink {
+  display: flex;
+  align-items: center;
+}
+
+.socialLink:hover path {
+  fill: #f83600;
+  transition: 0.3s fill;
+}
+
+.footer {
+  flex-grow: 0;
+}
+
+@media (max-width: 320px) {
+  .rowWrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .copyRight {
+    font-size: 15px;
+    line-height: 20px;
+    text-align: center;
+  }
+
+  .social {
+    margin-top: 16px;
+  }
+}

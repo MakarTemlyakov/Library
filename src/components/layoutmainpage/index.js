@@ -1,0 +1,1 @@
+import { LayoutMainPage } from './layoutmainpage';

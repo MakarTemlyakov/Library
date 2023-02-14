@@ -1,0 +1,511 @@
+tr {
+  text-align: left;
+}
+
+dl {
+  align-items: flex-start;
+  display: flex;
+  width: 100%;
+}
+
+.columnLayout {
+  display: grid;
+  grid-template-rows: 160px 52px 93px 400px;
+  grid-template-columns: 445px 30px;
+  margin-top: 42px;
+}
+
+.detailInfoWrapper {
+  display: flex;
+  margin-top: 16px;
+}
+
+.detailInfoGroup {
+  display: flex;
+  flex-direction: column;
+  word-break: break-word;
+  gap: 16px;
+  width: 635px;
+}
+
+.detailInfoGroup:last-of-type dl {
+  display: grid;
+  grid-template-columns: 0.6fr 1fr;
+}
+
+.detailInfoGroup:first-of-type dt {
+  width: 50%;
+}
+
+.detailInfoGroup:first-of-type {
+  width: 329px;
+}
+
+.detailInfoGroup:last-of-type {
+  margin-left: 170px;
+}
+
+.bookPageImge {
+  max-width: 100%;
+}
+
+.commenWrapper {
+  width: 730px;
+  margin-top: 62px;
+}
+
+.reviewTitle {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 28px;
+  margin: 0;
+  position: relative;
+  display: inline-block;
+}
+
+.bookRating {
+  display: flex;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.bookRatingTitle {
+  margin: 0;
+  margin-top: 42px;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 28px;
+  color: #363636;
+}
+
+.bookRatingTotal {
+  display: inline-block;
+  margin-left: 24px;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 28px;
+  color: #363636;
+}
+
+.bookRatingStars {
+  display: flex;
+  gap: 12px;
+}
+
+.detailInfo {
+  margin-top: 62px;
+}
+
+.detailInfoTitle {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 28px;
+  color: #363636;
+}
+
+dt {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: #a7a7a7;
+}
+
+dd {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #363636;
+}
+
+.detailInfoTitle:after {
+  display: block;
+  margin-top: 16px;
+  content: '';
+  border: 1px solid #ebebeb;
+  width: 350px;
+}
+
+.bookRatingTitle::after {
+  margin-top: 16px;
+  display: block;
+  content: '';
+  border: 1px solid #ebebeb;
+  width: 350px;
+}
+
+.bookTitle {
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 40px;
+  color: #363636;
+  grid-column: 3/-1;
+  margin: 0;
+}
+
+.contentWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 636px;
+}
+
+.bookAuthor {
+  margin-top: 24px;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 28px;
+  color: #a7a7a7;
+  grid-column: 3;
+}
+
+.bookBooking {
+  margin-top: 32px;
+  width: 350px;
+  height: 52px;
+  grid-row: 3;
+  grid-column: 3;
+}
+
+.bookAbout {
+  margin-top: 62px;
+  grid-row: 4;
+  grid-column: 3/-1;
+}
+
+.bookAboutDescription > p {
+  margin-top: 32px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #363636;
+}
+
+.bookAboutTitle {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 28px;
+  color: #363636;
+
+  display: inline-block;
+}
+
+.reviewTitle::after {
+  display: block;
+  content: '';
+  border: 1px solid #ebebeb;
+  margin-top: 16px;
+  width: 350px;
+}
+
+.bookPage .button {
+  display: block;
+  margin-top: 42px;
+}
+
+.reviewCount {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  color: #a7a7a7;
+  display: inline-block;
+  margin-left: 6px;
+}
+
+.commentsList {
+  display: flex;
+  flex-direction: column;
+  gap: 42px;
+}
+
+.reviewButton {
+  margin-top: 42px;
+  width: 350px;
+  height: 52px;
+  margin-bottom: 42px;
+}
+
+.bookEmptyRaiting {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  color: #363636;
+  margin-left: 24px;
+  display: inline-block;
+}
+
+.imgWrapper {
+  border: 1px solid #a7a7a7;
+  border-radius: 10px;
+  width: 445px;
+  height: 593px;
+  /* position: relative;
+  display: flex;
+  align-items: center; */
+  /* margin-top: 13px; */
+  /* flex-direction: column; */
+  gap: 16px;
+}
+
+.bookNoImg {
+  width: 56px;
+  height: 56px;
+}
+
+.columnWapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 696px;
+  grid-row: 1;
+  gap: 16px;
+}
+
+.bookPageImge {
+  height: 100%;
+  width: 100%;
+}
+
+.commenWrapper .button {
+  border: transparent;
+  background: transparent;
+  margin-left: 24px;
+  margin-top: 0;
+  display: inline-block;
+}
+
+.commenWrapper .button path {
+  fill: #363636;
+  transition: 0.3s all ease-in;
+}
+
+.commenWrapper .button.buttonActive path {
+  transform-origin: 50% 50%;
+  transform: rotate(180deg);
+}
+
+@media (max-width: 768px) {
+  .contentWrapper {
+    display: none;
+  }
+
+  .columnLayout {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    gap: 0;
+  }
+
+  .imgWrapper {
+    max-width: 136px;
+    max-height: 198px;
+    grid-row: 1/3;
+    grid-column: 1;
+  }
+
+  .bookPageImge {
+    width: 100%;
+    height: 100%;
+  }
+
+  .bookTitle {
+    grid-row: 1/1;
+    grid-column: 2/-1;
+
+    font-size: 24px;
+    line-height: 30px;
+  }
+
+  .bookAuthor {
+    margin-top: 0;
+    grid-column: 2/4;
+    grid-row: 2;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  .bookBooking {
+    margin-top: 0;
+    width: 306px;
+    grid-row: 3;
+    height: 52px;
+    grid-column: 2;
+  }
+  .bookAbout {
+    grid-row: 4;
+    grid-column: 1/-1;
+  }
+
+  .bookAboutTitle {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .bookRatingTitle {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .detailInfoTitle {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .reviewTitle {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+  }
+  .reviewTitle::after,
+  .detailInfoTitle:after,
+  .bookRatingTitle:after,
+  .bookAboutTitle:after {
+    width: 306px;
+  }
+
+  .reviewButton {
+    width: 100%;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 150%;
+  }
+
+  .detailInfoWrapper {
+    flex-wrap: nowrap;
+    gap: 30px;
+  }
+
+  .detailInfoGroup {
+    width: 305px;
+  }
+
+  .detailInfoGroup dt {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  .detailInfoGroup dd {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  .detailInfoGroup:last-of-type {
+    margin-left: 0;
+  }
+  .multipleGroup {
+    justify-content: space-between;
+  }
+
+  .detailInfoGroup:last-of-type dl {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .multipleGroup dt {
+    width: 100%;
+  }
+}
+
+@media (max-width: 320px) {
+  .columnLayout {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .imgWrapper {
+    align-self: center;
+  }
+
+  .columnWapper {
+    height: 100%;
+  }
+
+  .bookTitle {
+    margin-top: 16px;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  .bookAuthor {
+    margin-top: 8px;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .bookBooking {
+    margin-top: 53px;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 18px;
+    align-self: center;
+  }
+
+  .bookAboutDescription > p {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18p;
+  }
+
+  .bookAboutTitle,
+  .bookRatingTitle,
+  .reviewTitle,
+  .detailInfoTitle {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  .reviewTitle {
+    display: flex;
+    align-items: center;
+  }
+
+  .bookAboutTitle:after,
+  .bookRatingTitle:after,
+  .reviewTitle:after,
+  .detailInfoTitle:after {
+    display: none;
+  }
+
+  .reviewButton {
+    margin: 20px 0;
+  }
+
+  .detailInfoWrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .detailInfoGroup,
+  .detailInfoGroup:first-of-type {
+    width: 288px;
+  }
+
+  .bookRatingStars > li > svg {
+    width: 34px;
+    height: 34px;
+  }
+
+  .commenWrapper {
+    width: 0;
+  }
+
+  .bookRating {
+    align-items: flex-start;
+    margin-top: 16px;
+    flex-direction: column;
+  }
+
+  .bookEmptyRaiting {
+    margin-top: 8px;
+    margin-left: 0;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+  }
+}

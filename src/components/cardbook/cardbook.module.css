@@ -1,0 +1,240 @@
+.bookCardImgViewListWrppaer,
+.bookCardImgViewTileWrppaer {
+  background: transparent;
+  border: 1px solid #a7a7a7;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.noImg {
+  height: 48px;
+  width: 48px;
+}
+
+.bookCardImgViewListWrppaer {
+  width: 120px;
+  height: 170px;
+}
+
+.bookCardImgViewTileWrppaer {
+  width: 174px;
+  height: 242px;
+}
+
+.button:disabled {
+  background: #f9f9fa;
+  border: 1px solid #bfc4c9;
+  color: #a7a7a7;
+  cursor: not-allowed;
+}
+
+.viewListWrapper {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+}
+
+.bookCardRating {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  color: #a7a7a7;
+}
+
+.bookCardRatingViewList {
+  align-self: center;
+  grid-row: 3;
+  grid-column: 1;
+}
+
+.ratingStars {
+  display: flex;
+  gap: 10px;
+}
+
+.ratingStarsViewList {
+  align-self: center;
+  justify-self: flex-start;
+  grid-row: 3;
+  grid-column: 1;
+}
+
+.ratingStarsViewTile {
+  margin-top: 16px;
+}
+
+.bookCardRatingViewTile {
+  margin-top: 16px;
+}
+
+.bookCardAuthor {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  color: #727272;
+}
+
+.bookCardAuthorViewList {
+  grid-row: 2;
+  grid-column: 1;
+  margin: 0;
+}
+
+.bookCardAuthorViewTile {
+  margin-top: 8px;
+}
+
+.bookCardAuthorViewList {
+  grid-row: 2;
+  grid-column: 1;
+  margin: 0;
+}
+
+.bookCardAuthorViewTile {
+  margin-top: 8px;
+}
+
+.button {
+  background: linear-gradient(231.58deg, #f83600 -53.35%, #f9d423 297.76%);
+  border-radius: 20px;
+  padding: 11px 23px;
+  border: 1px solid transparent;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 18px;
+  color: #ffffff;
+  text-transform: uppercase;
+  cursor: pointer;
+  min-width: 166px;
+}
+
+.buttonViewList {
+  align-self: center;
+  justify-self: end;
+  grid-row: 3;
+  margin: 0;
+}
+
+.buttonViewTile {
+  margin-top: 19px;
+  align-self: center;
+}
+
+.bookCardTitle {
+  margin: 0;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 18px;
+  color: #363636;
+}
+
+.bookCardTitleViewTile {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-top: 31px;
+}
+
+.bookCardTitleViewList {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 30px;
+  grid-column: 1/-1;
+}
+
+.bookCard {
+  background: #ffffff;
+  box-shadow: 0px 2px 4px rgba(191, 196, 201, 0.2), 0px 3px 4px rgba(191, 196, 201, 0.18),
+    0px 1px 5px rgba(191, 196, 201, 0.24);
+  border-radius: 10px;
+  height: 100%;
+}
+
+.bookCardViewTile {
+  width: 190px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 8px 8px 16px;
+}
+
+.bookCardViewList {
+  width: 100%;
+  display: grid;
+  padding: 24px;
+  gap: 16px;
+  grid-template-columns: auto 1fr;
+}
+
+@media (max-width: 320px) {
+  .bookCardViewTile {
+    width: 288px;
+    align-items: center;
+    padding: 8px 16px 16px;
+  }
+
+  .button {
+    width: 100%;
+  }
+
+  .bookCardAuthor {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  .bookCardAuthorViewList {
+    margin-top: 8px;
+    font-size: 16px;
+    line-height: 24px;
+    grid-column: 1/-1;
+  }
+
+  .viewListWrapper {
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 320px) {
+  .bookCardTitleViewList {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+    grid-column: 1/2;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .bookCardImgViewListWrppaer {
+    width: 70px;
+    height: 100px;
+  }
+  .bookCardViewList {
+    padding: 16px 16px 16px 8px;
+  }
+
+  .bookCardAuthorViewList {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    grid-column: 1/1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
+
+  .buttonViewList {
+    grid-row: 4;
+    margin-top: 16px;
+  }
+
+  .viewListWrapper {
+    gap: 3px;
+  }
+}
