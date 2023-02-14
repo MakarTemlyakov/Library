@@ -1,14 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { FreeMode, Mousewheel, Navigation, Pagination, Scrollbar, Thumbs } from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react';
 
-import bookiMG from '../../assets/img/111.png';
-import noImg from '../../assets/img/no-image.svg';
 import { Breadcrumbs } from '../../components/breadcrumbs/breadcrumbs';
 import { Button } from '../../components/button/button';
 import { Comment } from '../../components/comment/comment';
 import { StarIcon } from '../../components/icons/star/star-icon';
+import { Rating } from '../../components/rating/rating';
 import { Slider } from '../../components/slider/slider';
 import books from '../../data/books';
 
@@ -19,6 +16,7 @@ export function BookPage() {
   const book = books[`${bookParam.category}`].find((b) => b.id === bookParam.bookId);
 
   const [isShowCommentMode, setCommentMode] = useState(false);
+  console.log({ book });
 
   return (
     <section className={styles.bookPage} data-test-id='book-page'>
@@ -57,23 +55,7 @@ export function BookPage() {
 
         <h3 className={styles.bookRatingTitle}>Рейтинг</h3>
         <div className={styles.bookRating}>
-          <ul className={styles.bookRatingStars}>
-            <li className={styles.bookRatingStarItem}>
-              <StarIcon isReview={true} />
-            </li>
-            <li>
-              <StarIcon isReview={true} />
-            </li>
-            <li>
-              <StarIcon isReview={true} />
-            </li>
-            <li>
-              <StarIcon isReview={true} />
-            </li>
-            <li>
-              <StarIcon />
-            </li>
-          </ul>
+          <Rating bookRating={book.rating} />
           {book.rating > 0 ? (
             <span className={styles.bookRatingTotal}>{book.rating}</span>
           ) : (

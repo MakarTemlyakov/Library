@@ -87,11 +87,6 @@ dl {
   color: #363636;
 }
 
-.bookRatingStars {
-  display: flex;
-  gap: 12px;
-}
-
 .detailInfo {
   margin-top: 62px;
 }
@@ -484,11 +479,6 @@ dd {
   .detailInfoGroup,
   .detailInfoGroup:first-of-type {
     width: 288px;
-  }
-
-  .bookRatingStars > li > svg {
-    width: 34px;
-    height: 34px;
   }
 
   .commenWrapper {

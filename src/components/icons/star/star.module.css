@@ -1,0 +1,12 @@
+.star path {
+  transition: 0.4s all ease-in;
+  fill: transparent;
+}
+
+.star:hover path {
+  fill: #ffbc1f;
+}
+
+.reviewed path {
+  fill: #ffbc1f;
+}

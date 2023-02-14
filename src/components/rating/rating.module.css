@@ -1,0 +1,9 @@
+.bookRatingStars > li > svg {
+  width: 34px;
+  height: 34px;
+}
+
+.bookRatingStars {
+  display: flex;
+  gap: 12px;
+}
