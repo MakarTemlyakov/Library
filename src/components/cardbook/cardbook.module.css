@@ -96,20 +96,6 @@
   margin-top: 8px;
 }
 
-.button {
-  background: linear-gradient(231.58deg, #f83600 -53.35%, #f9d423 297.76%);
-  border-radius: 20px;
-  padding: 11px 23px;
-  border: 1px solid transparent;
-  font-weight: 600;
-  font-size: 12px;
-  line-height: 18px;
-  color: #ffffff;
-  text-transform: uppercase;
-  cursor: pointer;
-  min-width: 166px;
-}
-
 .buttonViewList {
   align-self: center;
   justify-self: end;

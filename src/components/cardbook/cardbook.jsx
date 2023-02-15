@@ -1,5 +1,6 @@
 import bookiMG from '../../assets/img/111.png';
 import noImg from '../../assets/img/no-image.svg';
+import { Button } from '../button';
 import { StarIcon } from '../icons/star/star-icon';
 
 import styles from './cardbook.module.css';
@@ -14,7 +15,7 @@ export const CardBook = ({ isListView, isHasImg, rating, author, title, bookedTi
     <div className={isListView ? `${styles.bookCardImgViewListWrppaer}` : `${styles.bookCardImgViewTileWrppaer}`}>
       <img className={isHasImg == null ? styles.noImg : ''} src={isHasImg !== null ? bookiMG : noImg} alt='' />
     </div>
-    <div className={isListView ? `${styles.viewListWrapper}` : ''}>
+    <div className={isListView ? `${styles.viewListWrapper}` : null}>
       {rating > 0 ? (
         <ul
           className={
@@ -69,15 +70,17 @@ export const CardBook = ({ isListView, isHasImg, rating, author, title, bookedTi
       >
         {author}, <time dateTime={year}>{year}</time>
       </p>
-      <button
+
+      <Button
+        color='primary'
+        size='small'
+        isDisabled={bookedTill != null}
         className={
           isListView ? `${styles.button} ${styles.buttonViewList}` : `${styles.button} ${styles.buttonViewTile}`
         }
-        type='button'
-        disabled={bookedTill != null}
       >
         {bookedTill ? 'Занята до 23.04' : isBooked ? 'Забронирована' : 'Забронировать'}
-      </button>
+      </Button>
     </div>
   </article>
 );

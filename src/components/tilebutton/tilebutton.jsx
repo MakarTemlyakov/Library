@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+
 import styles from './tilebutton.module.css';
 
 export const TileButton = ({ selectedTypeView, onChangeType, isActiveSearch }) => {

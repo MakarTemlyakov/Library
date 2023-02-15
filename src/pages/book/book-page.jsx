@@ -34,7 +34,9 @@ export function BookPage() {
             </time>
           </span>
           <div className={styles.bookBooking}>
-            <Button>Забронировать</Button>
+            <Button size='large' color='secondary'>
+              Забронировать
+            </Button>
           </div>
           <div className={styles.bookAbout}>
             <h2 className={styles.bookAboutTitle}>О книге</h2>
@@ -144,7 +146,9 @@ export function BookPage() {
           )}
         </div>
         <div className={styles.reviewButton} data-test-id='button-rating'>
-          <Button>Оценить книгу</Button>
+          <Button size='large' color='primary'>
+            Оценить книгу
+          </Button>
         </div>
       </div>
     </section>
