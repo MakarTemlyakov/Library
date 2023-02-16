@@ -1,9 +1,18 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+
+import { libraryAPI } from '../../api/api';
 
 const initialState = {
   isMenuActive: false,
   isVisibleCategoryList: false,
+  categories: [],
 };
+
+export const fetchBooksCategories = createAsyncThunk('categories/fetchByUrl', async () => {
+  const data = await libraryAPI.fetchCategories();
+
+  return data;
+});
 
 const navigationSlice = createSlice({
   name: 'navigation',
@@ -20,6 +29,14 @@ const navigationSlice = createSlice({
 
       newState.isVisibleCategoryList = action.payload;
     },
+  },
+
+  extraReducers: (builder) => {
+    builder.addCase(fetchBooksCategories.fulfilled, (state, action) => {
+      const newState = state;
+
+      newState.categories = action.payload;
+    });
   },
 });
 

@@ -2,11 +2,9 @@ import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import cn from 'classnames';
 
-import categories from '../../data/categories';
-
 import styles from './categories-list.module.css';
 
-export const CategoriesList = ({ navigationBooks, burgerBooks }) => {
+export const CategoriesList = ({ navigationBooks, burgerBooks, categories }) => {
   const isVisibleCategoryList = useSelector((state) => state.navigation.isVisibleCategoryList);
   const isActiveMenu = useSelector((state) => state.navigation.isMenuActive);
   const activeStyle = cn(styles.bookList, { [styles.bookListHidden]: !isVisibleCategoryList });
