@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { Breadcrumbs } from '../../components/breadcrumbs/breadcrumbs';
 import { Button } from '../../components/button/button';
 import { Comment } from '../../components/comment/comment';
-import { StarIcon } from '../../components/icons/star/star-icon';
 import { Rating } from '../../components/rating/rating';
 import { Slider } from '../../components/slider/slider';
 import books from '../../data/books';
@@ -16,7 +15,6 @@ export function BookPage() {
   const book = books[`${bookParam.category}`].find((b) => b.id === bookParam.bookId);
 
   const [isShowCommentMode, setCommentMode] = useState(false);
-  console.log({ book });
 
   return (
     <section className={styles.bookPage} data-test-id='book-page'>

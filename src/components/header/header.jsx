@@ -1,4 +1,4 @@
-import { createRef, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useLocation, useParams } from 'react-router-dom';
 import cn from 'classnames';
@@ -12,7 +12,7 @@ import styles from './header.module.css';
 
 export const Header = () => {
   const isActiveMenu = useSelector((state) => state.navigation.isMenuActive);
-
+  const activeBtnClass = cn(styles.burgerMenuWrapper, { [styles.burgerMenuWrapperActive]: isActiveMenu });
   const dispatch = useDispatch();
   const burgerRef = useRef(null);
   const location = useLocation();
@@ -55,14 +55,7 @@ export const Header = () => {
               <p className={styles.logoName}>Cleverland</p>
             </div>
           </NavLink>
-          <button
-            data-test-id='button-burger'
-            type='button'
-            className={
-              isActiveMenu ? cn(styles.burgerMenuWrapper, styles.burgerMenuWrapperActive) : cn(styles.burgerMenuWrapper)
-            }
-            onClick={burgerOnClick}
-          >
+          <button data-test-id='button-burger' type='button' className={activeBtnClass} onClick={burgerOnClick}>
             <span className={styles.burgerMenu} />
           </button>
           {isActiveMenu && <BurgerMenu burgerRef={burgerRef} />}

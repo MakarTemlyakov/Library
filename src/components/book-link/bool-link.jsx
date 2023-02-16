@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useLocation, useParams } from 'react-router-dom';
 import cn from 'classnames';
 
-import { toggleListCategory, toggleModeMenu } from '../slices/navigation-slice';
+import { toggleListCategory } from '../slices/navigation-slice';
 
 import styles from './book-link.module.css';
 
@@ -16,6 +16,9 @@ export const BookLink = ({ navigationShowcase, burgerShowCase }) => {
   const iActiveLinkBooks = location.pathname.includes('books');
   const patch = useParams();
   const currentCategory = `books/${patch.category || 'all'}`;
+  const styleClassArrow = cn(styles.arrow, { [styles.activeArrow]: isVisibleCategoryList });
+  const bookLinkClass = cn(styles.menuTabLink, { [styles.active]: iActiveLinkBooks });
+  const buttonIconClass = cn(styles.button, { [styles.buttonActive]: isVisibleCategoryList });
 
   useEffect(() => {
     if (iActiveLinkBooks) {
@@ -34,19 +37,16 @@ export const BookLink = ({ navigationShowcase, burgerShowCase }) => {
 
   return (
     <NavLink
-      className={iActiveLinkBooks ? `${styles.menuTabLink} ${styles.active}` : `${styles.menuTabLink}`}
+      className={bookLinkClass}
       to={currentCategory}
-      onClick={() => onShowCategoryList()}
+      onClick={onShowCategoryList}
       data-test-id={isActiveMenu ? burgerShowCase : navigationShowcase}
     >
       Витрина книг
-      <button
-        className={isVisibleCategoryList ? `${styles.button} ${styles.buttonActive}` : `${styles.button}`}
-        type='button'
-      >
+      <button className={buttonIconClass} type='button'>
         <svg width='14' height='8' viewBox='0 0 14 8' fill='none' xmlns='http://www.w3.org/2000/svg'>
           <path
-            className={cn(styles.arrow, { [styles.activeArrow]: isVisibleCategoryList })}
+            className={styleClassArrow}
             fillRule='evenodd'
             clipRule='evenodd'
             fill='none'

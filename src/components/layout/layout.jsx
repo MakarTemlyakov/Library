@@ -1,6 +1,5 @@
 import { Fragment, useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import { NavigationMenuContext } from '../..';
 
 import { Footer } from '../footer/footer';
 import { Header } from '../header';

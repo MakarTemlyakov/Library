@@ -1,20 +1,14 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import cn from 'classnames';
 
 import categories from '../../data/categories';
-import { toggleListCategory } from '../slices/navigation-slice';
 
 import styles from './categories-list.module.css';
 
 export const CategoriesList = ({ navigationBooks, burgerBooks }) => {
   const isVisibleCategoryList = useSelector((state) => state.navigation.isVisibleCategoryList);
-  const location = useLocation();
-  const dispatch = useDispatch();
   const isActiveMenu = useSelector((state) => state.navigation.isMenuActive);
-
-  // что такое {[styles.bookListHidden]}??????
   const activeStyle = cn(styles.bookList, { [styles.bookListHidden]: !isVisibleCategoryList });
 
   return (

@@ -1,8 +1,10 @@
+import cn from 'classnames';
+
 import { StarIcon } from '../icons/star/star-icon';
 
 import styles from './rating.module.css';
 
-export const Rating = ({ bookRating }) => {
+export const Rating = ({ bookRating, className }) => {
   const stars = [...Array(5)];
 
   return (
