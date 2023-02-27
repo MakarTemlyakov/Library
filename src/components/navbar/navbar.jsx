@@ -1,21 +1,14 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import cn from 'classnames';
 
 import { BookLink } from '../book-link/bool-link';
 import { CategoriesList } from '../categories-list/categories-list';
-import { fetchBooksCategories } from '../slices/navigation-slice';
 
 import styles from './navbar.module.css';
 
 export function NavBar() {
-  const dispatch = useDispatch();
   const categories = useSelector((state) => state.navigation.categories);
-
-  useEffect(() => {
-    dispatch(fetchBooksCategories());
-  }, [dispatch]);
 
   return (
     <nav className={cn(styles.mainNavigation)} data-test-id='navbar'>

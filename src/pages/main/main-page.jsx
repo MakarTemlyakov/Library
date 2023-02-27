@@ -1,21 +1,36 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useParams } from 'react-router-dom';
 import classNames from 'classnames';
 
 import { CardBook } from '../../components/cardbook/cardbook';
 import { CloseIcon } from '../../components/close-icon/close-icon';
 import { ListButton } from '../../components/listbutton/listbutton';
+import { Loader } from '../../components/loader/loader';
 import { RateButton } from '../../components/ratebutton/ratebutton';
 import { SearchBox } from '../../components/searchbox/searchbox';
+import { fetchBooks, fetchBooksCategories } from '../../components/slices/navigation-slice';
 import { TileButton } from '../../components/tilebutton/tilebutton';
-import books from '../../data/books';
 
 import styles from './main-page.module.css';
 
 export function MainPage() {
   const [selectedTypeView, setTypeView] = useState(0);
   const [isActiveSearch, setActiveSearch] = useState(false);
+  const { isError, isLoading } = useSelector((state) => state.navigation);
+
+  const dispatch = useDispatch();
+  const { category } = useParams();
+  const currentCategory = useSelector((state) => state.navigation.categories.find((x) => x.path === category));
+  const books = useSelector((state) => state.navigation.books);
+  const booksByCategory =
+    category === 'all' ? books : books.filter((book) => book.categories.some((c) => c === currentCategory.name));
   const activeClass = classNames(styles.searchIcon, { [styles.hiddenButton]: isActiveSearch });
+
+  useEffect(() => {
+    Promise.all([dispatch(fetchBooksCategories()), dispatch(fetchBooks())]);
+  }, [dispatch]);
+
   const onChangeType = (type) => {
     setTypeView(type);
   };
@@ -29,9 +44,10 @@ export function MainPage() {
   };
 
   const isListView = selectedTypeView === 1;
-  const category = useParams();
 
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : (
     <section className={styles.MainPage} data-test-id='main'>
       <div className={styles.layoutBooks}>
         <div className={styles.controlPanelBooks}>
@@ -71,23 +87,24 @@ export function MainPage() {
               : `${styles.bookCards} ${styles.bookCardsTileView}`
           }
         >
-          {books[`${category.category}`].map((book) => (
-            <li key={book.id}>
-              <NavLink to={`/books/${book.category}/${book.id}`}>
-                <CardBook
-                  bookId={book.id}
-                  isHasImg={book.image}
-                  isListView={isListView}
-                  rating={book.rating}
-                  author={book.author}
-                  title={book.title}
-                  bookedTill={book.bookedTill}
-                  year={book.year}
-                  isBooked={book.isBooked}
-                />
-              </NavLink>
-            </li>
-          ))}
+          {booksByCategory.length > 0 &&
+            booksByCategory.map((book) => (
+              <li key={book.id}>
+                <NavLink to={`/books/${currentCategory?.path}/${book.id}`}>
+                  <CardBook
+                    bookId={book.id}
+                    isHasImg={book.image}
+                    isListView={isListView}
+                    rating={book.rating}
+                    author={book.author}
+                    title={book.title}
+                    bookedTill={book.bookedTill}
+                    year={book.year}
+                    isBooked={book.isBooked}
+                  />
+                </NavLink>
+              </li>
+            ))}
         </ul>
       </div>
     </section>

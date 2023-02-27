@@ -1,0 +1,35 @@
+.overlay {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgb(54 54 54 / 30%);
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 20px solid #80808014;
+  background: transparent;
+  animation-name: loader;
+  animation-duration: 0.7s;
+  animation-iteration-count: infinite;
+  border-bottom: 20px solid #f83600;
+  border-left-color: #f83600;
+}
+
+@keyframes loader {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -23,7 +23,7 @@ export const CategoriesList = ({ navigationBooks, burgerBooks, categories }) => 
       {categories.map((category) => (
         <li key={category.id} className={styles.bookListItem}>
           <NavLink
-            to={`books/${category.route}`}
+            to={`books/${category.path}`}
             className={({ isActive }) => (isActive ? styles.active : null)}
             data-test-id={isActiveMenu ? burgerBooks : navigationBooks}
           >

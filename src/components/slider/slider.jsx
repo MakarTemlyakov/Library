@@ -12,7 +12,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import 'swiper/css/thumbs';
 
-export const Slider = ({ bookImg }) => {
+export const Slider = ({ images }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
   return (
@@ -36,10 +36,10 @@ export const Slider = ({ bookImg }) => {
           },
         }}
       >
-        {bookImg?.length > 0 ? (
-          bookImg.map((slide) => (
+        {images?.length > 0 ? (
+          images.map((slide) => (
             <SwiperSlide key={slide.id}>
-              <img src={slide.img} alt='' />
+              <img src={`https://strapi.cleverland.by${slide.url}`} alt='' />
             </SwiperSlide>
           ))
         ) : (
@@ -49,7 +49,7 @@ export const Slider = ({ bookImg }) => {
         )}
       </Swiper>
       <div className='pagination' />
-      {bookImg?.length > 1 && (
+      {images?.length > 1 && (
         <Swiper
           slidesPerView={5}
           spaceBetween={40}
@@ -63,9 +63,9 @@ export const Slider = ({ bookImg }) => {
           className='mini-slider'
           direction='horizontal'
         >
-          {bookImg.map((slide) => (
+          {images.map((slide) => (
             <SwiperSlide key={slide.id} data-test-id='slide-mini'>
-              <img src={slide.img} alt='' />
+              <img src={`https://strapi.cleverland.by${slide.url}`} alt='' />
             </SwiperSlide>
           ))}
         </Swiper>
