@@ -2,43 +2,19 @@ import axios from 'axios';
 
 export const libraryAPI = {
   fetchCategories: async () => {
-    let data;
+    const response = await axios.get('https://strapi.cleverland.by/api/categories', { crossdomain: true });
 
-    try {
-      const response = await axios.get('https://strapi.cleverland.by/api/categories', { crossdomain: true });
-
-      data = response.data;
-    } catch (error) {
-      console.log(error);
-    }
-
-    return data;
+    return response;
   },
   fetchBooks: async () => {
-    let data;
+    const response = await axios.get('https://strapi.cleverland.by/api/books', { crossdomain: true });
 
-    try {
-      const response = await axios.get('https://strapi.cleverland.by/api/books', { crossdomain: true });
-
-      data = response.data;
-    } catch (error) {
-      console.log(error);
-    }
-
-    return data;
+    return response;
   },
 
   fetchBookById: async (bookId) => {
-    let data;
+    const response = axios.get(`https://strapi.cleverland.by/api/books/${bookId}`, { crossdomain: true });
 
-    try {
-      const response = await axios.get(`https://strapi.cleverland.by/api/books/${bookId}`, { crossdomain: true });
-
-      data = response.data;
-    } catch (error) {
-      console.log(error);
-    }
-
-    return data;
+    return response;
   },
 };

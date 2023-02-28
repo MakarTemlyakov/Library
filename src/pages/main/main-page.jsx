@@ -11,6 +11,7 @@ import { RateButton } from '../../components/ratebutton/ratebutton';
 import { SearchBox } from '../../components/searchbox/searchbox';
 import { fetchBooks, fetchBooksCategories } from '../../components/slices/navigation-slice';
 import { TileButton } from '../../components/tilebutton/tilebutton';
+import { ToastMessage } from '../../components/toastmessage/testmessage';
 
 import styles from './main-page.module.css';
 
@@ -47,6 +48,8 @@ export function MainPage() {
 
   return isLoading ? (
     <Loader />
+  ) : isError ? (
+    <ToastMessage text={isError} />
   ) : (
     <section className={styles.MainPage} data-test-id='main'>
       <div className={styles.layoutBooks}>

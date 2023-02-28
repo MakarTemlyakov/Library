@@ -2,6 +2,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { libraryAPI } from '../../api/api';
 
+const errorMessage = 'Что-то пошло не так. Обновите страницу через некоторое время.';
+
 const initialState = {
   isMenuActive: false,
   isVisibleCategoryList: false,
@@ -9,25 +11,37 @@ const initialState = {
   books: [],
   book: null,
   isLoading: false,
-  isError: false,
+  isError: ' ',
 };
 
-export const fetchBooksCategories = createAsyncThunk('categories/fetchCategories', async () => {
-  const data = await libraryAPI.fetchCategories();
+export const fetchBooksCategories = createAsyncThunk('categories/fetchCategories', async (_, { rejectWithValue }) => {
+  try {
+    const response = await libraryAPI.fetchCategories();
 
-  return data;
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(errorMessage);
+  }
 });
 
-export const fetchBooks = createAsyncThunk('categories/fetchBooks', async () => {
-  const data = await libraryAPI.fetchBooks();
+export const fetchBooks = createAsyncThunk('categories/fetchBooks', async (_, { rejectWithValue }) => {
+  try {
+    const response = await libraryAPI.fetchBooks();
 
-  return data;
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(errorMessage);
+  }
 });
 
-export const fetchBooksById = createAsyncThunk('categories/fetchBooksById', async (bookId) => {
-  const data = await libraryAPI.fetchBookById(bookId);
+export const fetchBooksById = createAsyncThunk('categories/fetchBooksById', async (bookId, { rejectWithValue }) => {
+  try {
+    const response = await libraryAPI.fetchBookById(bookId);
 
-  return data;
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(errorMessage);
+  }
 });
 
 const navigationSlice = createSlice({
@@ -65,7 +79,7 @@ const navigationSlice = createSlice({
       const newState = state;
 
       newState.isLoading = false;
-      newState.isError = true;
+      newState.isError = action.payload;
     });
 
     builder.addCase(fetchBooks.fulfilled, (state, action) => {
@@ -85,7 +99,7 @@ const navigationSlice = createSlice({
       const newState = state;
 
       newState.isLoading = false;
-      newState.isError = true;
+      newState.isError = action.payload;
     });
 
     builder.addCase(fetchBooksById.fulfilled, (state, action) => {
@@ -105,7 +119,7 @@ const navigationSlice = createSlice({
       const newState = state;
 
       newState.isLoading = false;
-      newState.isError = true;
+      newState.isError = action.payload;
     });
   },
 });

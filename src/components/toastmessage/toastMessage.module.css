@@ -1,0 +1,40 @@
+.toastMessage {
+  position: absolute;
+  top: -10%;
+  width: 100%;
+  height: 80px;
+  background: #feebea;
+  border: 2px solid #f42c4f;
+  border-radius: 5px;
+  padding: 24px 32px;
+  display: flex;
+  place-items: center;
+  gap: 24px;
+}
+
+.textMessage {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: #363636;
+}
+
+.close,
+.close:after {
+  transform-origin: center;
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: black;
+  border-radius: 5px;
+}
+
+.close {
+  margin-left: auto;
+  transform: rotate(45deg);
+}
+
+.close:after {
+  transform: rotate(90deg);
+  content: '';
+}
