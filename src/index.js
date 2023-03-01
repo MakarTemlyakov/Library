@@ -8,18 +8,21 @@ import { LayoutMainPage } from './components/layoutmainpage/layoutmainpage';
 import { store } from './components/slices';
 import { AgreementPage } from './pages/agreement';
 import { BookPage } from './pages/book';
+import { Login } from './pages/login/login';
 import { MainPage } from './pages/main';
 import { TermsPage } from './pages/terms';
 
 import './index.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+const isAuth = false;
 
 root.render(
   <React.StrictMode>
     <Provider store={store}>
       <HashRouter>
         <Routes>
+          <Route path='/login' element={<Login />} />
           <Route path='/' element={<Layout />}>
             <Route element={<LayoutMainPage />}>
               <Route path='/' element={<Navigate to='/books/all' />} />

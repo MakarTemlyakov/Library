@@ -9,7 +9,6 @@ import { ListButton } from '../../components/listbutton/listbutton';
 import { Loader } from '../../components/loader/loader';
 import { RateButton } from '../../components/ratebutton/ratebutton';
 import { SearchBox } from '../../components/searchbox/searchbox';
-import { fetchBooks, fetchBooksCategories } from '../../components/slices/navigation-slice';
 import { TileButton } from '../../components/tilebutton/tilebutton';
 import { ToastMessage } from '../../components/toastmessage/testmessage';
 
@@ -20,7 +19,6 @@ export function MainPage() {
   const [isActiveSearch, setActiveSearch] = useState(false);
   const { isError, isLoading } = useSelector((state) => state.navigation);
 
-  const dispatch = useDispatch();
   const { category } = useParams();
   const currentCategory = useSelector((state) => state.navigation.categories.find((x) => x.path === category));
   const books = useSelector((state) => state.navigation.books);

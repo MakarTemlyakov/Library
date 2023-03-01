@@ -1,19 +1,24 @@
 import { Fragment, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 
 import { Footer } from '../footer/footer';
 import { Header } from '../header';
 import { fetchBooks, fetchBooksCategories } from '../slices/navigation-slice';
 
+const isAuth = false;
+
 export const Layout = () => {
   const [isActiveMenu, setActiveMenu] = useState(false);
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
+    if (!isAuth) {
+      navigate('login');
+    }
     Promise.all([dispatch(fetchBooksCategories()), dispatch(fetchBooks())]);
-  }, [dispatch]);
+  }, [dispatch, navigate]);
 
   return (
     <Fragment>

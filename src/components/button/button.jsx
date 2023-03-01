@@ -12,7 +12,6 @@ export function Button({ children, color = 'primary', size, className, isDisable
     },
     className
   );
-  console.log(className);
 
   return (
     <button className={styleClass} type='button' disabled={isDisabled}>

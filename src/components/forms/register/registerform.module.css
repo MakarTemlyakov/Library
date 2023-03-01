@@ -1,0 +1,75 @@
+.registerForm {
+  margin-top: 46px;
+  padding: 48px 56px;
+  font-size: 14px;
+  background: #ffffff;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 30px;
+  color: #363636;
+}
+
+.steps {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 18px;
+  color: #363636;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+}
+
+.input {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  border: transparent;
+  padding: 19px 12px;
+  border-bottom: 1px solid #bfc4c9;
+}
+
+.help {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  color: #a7a7a7;
+  padding: 0 12px;
+}
+
+.input::placeholder {
+  color: #363636;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.groupLinks {
+  display: flex;
+  gap: 16px;
+  margin-top: 16px;
+  align-items: center;
+}
+
+.link {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #727272;
+}
+
+.exit {
+  text-transform: uppercase;
+  color: #363636;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 18px;
+}
