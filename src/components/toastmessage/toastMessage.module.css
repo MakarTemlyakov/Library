@@ -10,6 +10,7 @@
   display: flex;
   place-items: center;
   gap: 24px;
+  animation: 5s 1 normal slowlyOpacity;
 }
 
 .textMessage {
@@ -19,8 +20,8 @@
   color: #363636;
 }
 
-.close,
-.close:after {
+.closeIcon,
+.closeIcon:after {
   transform-origin: center;
   display: block;
   width: 20px;
@@ -29,12 +30,29 @@
   border-radius: 5px;
 }
 
-.close {
-  margin-left: auto;
+.closeIcon {
   transform: rotate(45deg);
 }
 
-.close:after {
+.closeIcon:after {
   transform: rotate(90deg);
   content: '';
+}
+
+.buttonClose {
+  margin-left: auto;
+  cursor: pointer;
+}
+
+@keyframes slowlyOpacity {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 0.1;
+  }
 }

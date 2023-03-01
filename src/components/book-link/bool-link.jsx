@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useLocation, useParams } from 'react-router-dom';
 import cn from 'classnames';
 
-import { toggleListCategory } from '../slices/navigation-slice';
+import { fetchBooks, fetchBooksCategories, toggleListCategory } from '../slices/navigation-slice';
 
 import styles from './book-link.module.css';
 

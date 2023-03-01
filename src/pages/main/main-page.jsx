@@ -28,10 +28,6 @@ export function MainPage() {
     category === 'all' ? books : books.filter((book) => book.categories.some((c) => c === currentCategory.name));
   const activeClass = classNames(styles.searchIcon, { [styles.hiddenButton]: isActiveSearch });
 
-  useEffect(() => {
-    Promise.all([dispatch(fetchBooksCategories()), dispatch(fetchBooks())]);
-  }, [dispatch]);
-
   const onChangeType = (type) => {
     setTypeView(type);
   };

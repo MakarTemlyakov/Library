@@ -1,11 +1,19 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Outlet } from 'react-router-dom';
 
 import { Footer } from '../footer/footer';
 import { Header } from '../header';
+import { fetchBooks, fetchBooksCategories } from '../slices/navigation-slice';
 
 export const Layout = () => {
   const [isActiveMenu, setActiveMenu] = useState(false);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    Promise.all([dispatch(fetchBooksCategories()), dispatch(fetchBooks())]);
+  }, [dispatch]);
 
   return (
     <Fragment>

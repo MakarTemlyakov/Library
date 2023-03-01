@@ -5,16 +5,18 @@ import { useParams } from 'react-router-dom';
 import { Breadcrumbs } from '../../components/breadcrumbs/breadcrumbs';
 import { Button } from '../../components/button/button';
 import { Comment } from '../../components/comment/comment';
+import { Loader } from '../../components/loader/loader';
 import { Rating } from '../../components/rating/rating';
 import { fetchBooksById } from '../../components/slices/navigation-slice';
 import { Slider } from '../../components/slider/slider';
+import { ToastMessage } from '../../components/toastmessage/testmessage';
 
 import styles from './book-page.module.css';
 
 export function BookPage() {
   const { bookId } = useParams();
   const dispatch = useDispatch();
-  const book = useSelector((state) => state.navigation.book);
+  const { isError, isLoading, book } = useSelector((state) => state.navigation);
 
   const [isShowCommentMode, setCommentMode] = useState(false);
 
@@ -22,7 +24,11 @@ export function BookPage() {
     dispatch(fetchBooksById(bookId));
   }, [dispatch, bookId]);
 
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : isError ? (
+    <ToastMessage text={isError} />
+  ) : (
     <section className={styles.bookPage} data-test-id='book-page'>
       {book !== null && (
         <div className='container'>
