@@ -2,7 +2,7 @@ import cn from 'classnames';
 
 import styles from './button.module.css';
 
-export function Button({ children, color = 'primary', size, className, isDisabled }) {
+export function Button({ children, color = 'primary', size, className, isDisabled, onClick }) {
   const styleClass = cn(
     {
       [styles.secondary]: color === 'secondary',
@@ -14,7 +14,7 @@ export function Button({ children, color = 'primary', size, className, isDisable
   );
 
   return (
-    <button className={styleClass} type='button' disabled={isDisabled}>
+    <button className={styleClass} type='button' disabled={isDisabled} onClick={onClick}>
       {children}
     </button>
   );
