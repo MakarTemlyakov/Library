@@ -128,3 +128,14 @@
 .checkboxInput:checked + .checkMark {
   background-image: url('../../../assets/img/password-show-icon.svg');
 }
+
+.checkboxInput ~ .correct {
+  display: block;
+  background-image: url('../../../assets/img/correct_pass.svg');
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  top: 50%;
+  margin-top: -24px;
+  right: 44px;
+}
