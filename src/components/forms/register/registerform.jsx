@@ -2,6 +2,7 @@ import { Fragment, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 
+import { biggerLatterWithNumber, minLength } from '../../../utils/validation';
 import { Button } from '../../button';
 
 import styles from './registerform.module.css';
@@ -13,8 +14,14 @@ export const RegisterForm = () => {
     handleSubmit,
     watch,
     setError,
-    formState: { isValid, errors },
-  } = useForm();
+    setValue,
+    formState: { errors, isDirty },
+  } = useForm({
+    mode: 'onChange',
+    defaultValues: {
+      password: '',
+    },
+  });
   const onSubmit = (data) => console.log(data);
   const textButton = step === 3 ? 'зарегистрироваться' : step === 2 ? 'последний шаг' : 'следующий шаг';
 
@@ -25,22 +32,10 @@ export const RegisterForm = () => {
       setStep(step + 1);
     }
   };
-  const minlength = (value) => (value) => value.length >= 7;
 
-  const biggerLatterWithNumber = (value) =>
-    value
-      .replaceAll(' ', '')
-      .split('')
-      .some((char) => char === char.toUpperCase() && !Number.isNaN(Number(char)));
-  console.log(errors.password);
-
-  useEffect(() => {
-    setError('password', {
-      types: {
-        validate: { minlength: 'Пароль не менее 8 символов, с заглавной буквой и цифрой' },
-      },
-    });
-  }, [setError]);
+  const isMinLengthError = errors.password?.type === 'minLength';
+  const isBiggerLatterWithNumber = errors.password?.type === 'biggerLatterWithNumber';
+  const idCorrectPassword = isDirty && !errors.password;
 
   const getFieldsByStep = (currentStep) => {
     switch (currentStep) {
@@ -67,10 +62,11 @@ export const RegisterForm = () => {
                 type='password'
                 id='password'
                 name='password'
-                required={true}
                 {...register('password', {
-                  validate: minlength,
-                  onBlur: (e) => console.log(e.target.value),
+                  validate: {
+                    minLength,
+                    biggerLatterWithNumber,
+                  },
                 })}
               />
               <label className={styles.label} htmlFor='password'>
@@ -79,14 +75,13 @@ export const RegisterForm = () => {
               <label className={styles.checkboxLabel} htmlFor='show-password'>
                 <input className={styles.checkboxInput} type='checkbox' id='show-password' />
                 <span className={styles.checkMark} />
-                <span className={styles.correct} />
+                {idCorrectPassword && !errors.password && <span className={styles.correct} />}
               </label>
-              {errors.password &&
-                errors.password.types &&
-                errors.password.types.validate &&
-                errors.password.types.validate.minlength && (
-                  <span className={styles.help}>{errors.password.types.validate.minlength}</span>
-                )}
+
+              <span className={styles.help}>
+                Пароль <span className={isMinLengthError ? styles.error : null}>не менее 8 символов</span>,{' '}
+                <span className={isBiggerLatterWithNumber ? styles.error : null}>с заглавной буквой</span> и цифрой
+              </span>
             </div>
           </Fragment>
         );

@@ -139,3 +139,7 @@
   margin-top: -24px;
   right: 44px;
 }
+
+.error {
+  color: red;
+}
