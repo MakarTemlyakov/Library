@@ -114,8 +114,8 @@
   left: -99999px;
 }
 
-.checkboxInput + .checkMark,
-.checkboxInput:not(:checked) + .checkMark {
+.input[name='password']:valid ~ .checkboxLabel > .checkboxInput + .checkMark,
+.input[name='password']:valid ~ .checkboxLabel > .checkboxInput:not(:checked) + .checkMark {
   position: absolute;
   top: 50%;
   margin-top: -24px;
@@ -125,11 +125,11 @@
   height: 24px;
 }
 
-.checkboxInput:checked + .checkMark {
+.input[name='password']:valid ~ .checkboxLabel > .checkboxInput:checked + .checkMark {
   background-image: url('../../../assets/img/password-show-icon.svg');
 }
 
-.checkboxInput ~ .correct {
+.input[name='password']:valid ~ .checkboxLabel > .checkboxInput ~ .correct {
   display: block;
   background-image: url('../../../assets/img/correct_pass.svg');
   width: 24px;

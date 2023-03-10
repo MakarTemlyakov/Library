@@ -6,4 +6,7 @@ const biggerLatterWithNumber = (value) =>
     .split('')
     .some((char) => char === char.toUpperCase() && !Number.isNaN(Number(char)));
 
-export { minLength, biggerLatterWithNumber };
+const isEnStr = (value) =>
+  value.split('').every((char, index) => value.charCodeAt(index) >= 65 && value.charCodeAt(index) <= 90);
+
+export { minLength, biggerLatterWithNumber, isEnStr };

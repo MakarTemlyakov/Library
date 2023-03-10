@@ -1,26 +1,25 @@
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 
-import { biggerLatterWithNumber, minLength } from '../../../utils/validation';
+import { biggerLatterWithNumber, isEnStr, minLength } from '../../../utils/validation';
 import { Button } from '../../button';
 
 import styles from './registerform.module.css';
 
 export const RegisterForm = () => {
   const [step, setStep] = useState(1);
+  const [checked, setChecked] = useState(false);
   const {
     register,
     handleSubmit,
-    watch,
-    setError,
-    setValue,
     formState: { errors, isDirty },
   } = useForm({
-    mode: 'onChange',
+    mode: 'all',
     defaultValues: {
       password: '',
     },
+    shouldUseNativeValidation: true,
   });
   const onSubmit = (data) => console.log(data);
   const textButton = step === 3 ? 'зарегистрироваться' : step === 2 ? 'последний шаг' : 'следующий шаг';
@@ -36,6 +35,7 @@ export const RegisterForm = () => {
   const isMinLengthError = errors.password?.type === 'minLength';
   const isBiggerLatterWithNumber = errors.password?.type === 'biggerLatterWithNumber';
   const idCorrectPassword = isDirty && !errors.password;
+  const inputType = checked ? 'text' : 'password';
 
   const getFieldsByStep = (currentStep) => {
     switch (currentStep) {
@@ -48,8 +48,7 @@ export const RegisterForm = () => {
                 type='text'
                 id='login'
                 name='login'
-                required={true}
-                {...register('login')}
+                {...register('login', { required: true })}
               />
               <label className={styles.label} htmlFor='login'>
                 Придумайте логин для входа
@@ -59,7 +58,7 @@ export const RegisterForm = () => {
             <div className={styles.group}>
               <input
                 className={styles.input}
-                type='password'
+                type={inputType}
                 id='password'
                 name='password'
                 {...register('password', {
@@ -67,15 +66,22 @@ export const RegisterForm = () => {
                     minLength,
                     biggerLatterWithNumber,
                   },
+                  required: true,
                 })}
               />
               <label className={styles.label} htmlFor='password'>
                 Придумайте пароль для входа
               </label>
               <label className={styles.checkboxLabel} htmlFor='show-password'>
-                <input className={styles.checkboxInput} type='checkbox' id='show-password' />
+                <input
+                  className={styles.checkboxInput}
+                  type='checkbox'
+                  id='show-password'
+                  onChange={() => setChecked(!checked)}
+                  checked={checked}
+                />
                 <span className={styles.checkMark} />
-                {idCorrectPassword && !errors.password && <span className={styles.correct} />}
+                {idCorrectPassword && <span className={styles.correct} />}
               </label>
 
               <span className={styles.help}>
