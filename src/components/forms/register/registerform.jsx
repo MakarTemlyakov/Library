@@ -2,7 +2,7 @@ import { Fragment, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 
-import { biggerLatterWithNumber, isEnStr, minLength } from '../../../utils/validation';
+import { biggerLatterWithNumber, charNumber, minLength, strLatinAlphabet } from '../../../utils/validation';
 import { Button } from '../../button';
 
 import styles from './registerform.module.css';
@@ -13,11 +13,19 @@ export const RegisterForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isDirty },
+    formState: {
+      errors,
+      isDirty,
+      isValid,
+      dirtyFields: { login = false, password = false, firstName = false, lastName = false },
+    },
   } = useForm({
     mode: 'all',
     defaultValues: {
       password: '',
+      login: '',
+      lastName: '',
+      firstName: '',
     },
     shouldUseNativeValidation: true,
   });
@@ -35,8 +43,10 @@ export const RegisterForm = () => {
   const isMinLengthError = errors.password?.type === 'minLength';
   const isBiggerLatterWithNumber = errors.password?.type === 'biggerLatterWithNumber';
   const idCorrectPassword = isDirty && !errors.password;
+  const isCharLatinAlphabet = errors.login?.type === 'strLatinAlphabet';
+  const isCharNumber = errors.login?.type === 'charNumber';
   const inputType = checked ? 'text' : 'password';
-
+  console.log(firstName);
   const getFieldsByStep = (currentStep) => {
     switch (currentStep) {
       case 1: {
@@ -44,20 +54,26 @@ export const RegisterForm = () => {
           <Fragment>
             <div className={styles.group}>
               <input
-                className={styles.input}
+                className={login && errors.login ? `${styles.input} ${styles.invalid}` : `${styles.input}`}
                 type='text'
                 id='login'
                 name='login'
-                {...register('login', { required: true })}
+                {...register('login', {
+                  validate: { charNumber, strLatinAlphabet },
+                  required: true,
+                })}
               />
               <label className={styles.label} htmlFor='login'>
                 Придумайте логин для входа
               </label>
-              <span className={styles.help}>Используйте для логина латинский алфавит и цифры</span>
+              <span className={isCharNumber ? `${styles.error} ${styles.help}` : `${styles.help}`}>
+                Используйте для логина{' '}
+                <span className={isCharLatinAlphabet ? styles.error : null}>латинский алфавит</span> и цифры
+              </span>
             </div>
             <div className={styles.group}>
               <input
-                className={styles.input}
+                className={password && errors.password ? `${styles.input} ${styles.invalid}` : `${styles.input}`}
                 type={inputType}
                 id='password'
                 name='password'
@@ -97,16 +113,30 @@ export const RegisterForm = () => {
         return (
           <Fragment>
             <div className={styles.group}>
-              <input className={styles.input} type='text' id='firstName' name='firstName' required={true} />
+              <input
+                className={errors.firstName ? `${styles.input} ${styles.invalid}` : `${styles.input}`}
+                type='text'
+                id='firstName'
+                name='firstName'
+                {...register('firstName', { required: 'Поле не может быть пустым' })}
+              />
               <label className={styles.label} htmlFor='firstName'>
                 Имя
               </label>
+              {errors.firstName && <span className={`${styles.help} ${styles.error}`}>{errors.firstName.message}</span>}
             </div>
             <div className={styles.group}>
-              <input className={styles.input} type='text' id='lastName' name='lastName' required={true} />
+              <input
+                className={errors.lastName ? `${styles.input} ${styles.invalid}` : `${styles.input}`}
+                type='text'
+                id='lastName'
+                name='lastName'
+                {...register('lastName', { required: 'Поле не может быть пустым' })}
+              />
               <label className={styles.label} htmlFor='lastName'>
                 Фамилия
               </label>
+              {errors.lastName && <span className={`${styles.help} ${styles.error}`}>{errors.lastName.message}</span>}
             </div>
           </Fragment>
         );
@@ -143,7 +173,7 @@ export const RegisterForm = () => {
       </div>
       {getFieldsByStep(step)}
       <div className={`${styles.group} ${styles.button}`}>
-        <Button size='large' onClick={onHandleClick}>
+        <Button size='large' onClick={onHandleClick} isDisabled={isValid ? false : true}>
           {textButton}
         </Button>
         <div className={styles.groupLinks}>

@@ -57,12 +57,19 @@
   background: #363636;
 }
 
+.valid {
+  border-color: green;
+}
+
+.invalid {
+  border-color: red;
+}
+
 .input:focus + .label,
-.input:valid + .label {
+.input:required:valid + .label {
   top: 0px;
   font-weight: 500;
   font-size: 12px;
-
   line-height: 16px;
   color: #a7a7a7;
   letter-spacing: 0.2px;
