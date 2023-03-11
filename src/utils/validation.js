@@ -18,4 +18,10 @@ const strLatinAlphabet = (value) =>
         (value.charCodeAt(index) >= 97 && value.charCodeAt(index) <= 122)
     );
 
-export { minLength, biggerLatterWithNumber, strLatinAlphabet, charNumber };
+const isEmail = (value) => {
+  const regExp = new RegExp('^([a-z0-9_-]+.)*[a-z0-9_-]+@[a-z0-9_-]+(.[a-z0-9_-]+)*.[a-z]{2,6}$');
+
+  return regExp.test(value);
+};
+
+export { minLength, biggerLatterWithNumber, strLatinAlphabet, charNumber, isEmail };

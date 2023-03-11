@@ -2,7 +2,7 @@ import { Fragment, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 
-import { biggerLatterWithNumber, charNumber, minLength, strLatinAlphabet } from '../../../utils/validation';
+import { biggerLatterWithNumber, charNumber, isEmail, minLength, strLatinAlphabet } from '../../../utils/validation';
 import { Button } from '../../button';
 
 import styles from './registerform.module.css';
@@ -26,10 +26,12 @@ export const RegisterForm = () => {
       login: '',
       lastName: '',
       firstName: '',
+      email: '',
+      phone: '',
     },
     shouldUseNativeValidation: true,
   });
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (formValues) => console.log(formValues);
   const textButton = step === 3 ? 'зарегистрироваться' : step === 2 ? 'последний шаг' : 'следующий шаг';
 
   const onHandleClick = () => {
@@ -46,7 +48,6 @@ export const RegisterForm = () => {
   const isCharLatinAlphabet = errors.login?.type === 'strLatinAlphabet';
   const isCharNumber = errors.login?.type === 'charNumber';
   const inputType = checked ? 'text' : 'password';
-  console.log(firstName);
   const getFieldsByStep = (currentStep) => {
     switch (currentStep) {
       case 1: {
@@ -146,16 +147,30 @@ export const RegisterForm = () => {
         return (
           <Fragment>
             <div className={styles.group}>
-              <input className={styles.input} type='text' id='phone' name='phone' required={true} />
+              <input
+                className={styles.input}
+                type='text'
+                id='phone'
+                name='phone'
+                {...register('phone', { required: 'Поле не может быть пустым' })}
+              />
               <label className={styles.label} htmlFor='phone'>
                 Номер телефона
               </label>
+              <span className={styles.help}>В формате +375 (xx) xxx-xx-xx</span>
             </div>
             <div className={styles.group}>
-              <input className={styles.input} type='text' id='email' name='email' required={true} />
+              <input
+                className={errors.email ? `${styles.input} ${styles.invalid}` : `${styles.input}`}
+                type='text'
+                id='email'
+                name='email'
+                {...register('email', { validate: { isEmail } })}
+              />
               <label className={styles.label} htmlFor='email'>
                 E-mail
               </label>
+              {errors.email && <span className={`${styles.help} ${styles.error}`}>Введите корректный e-mail</span>}
             </div>
           </Fragment>
         );
@@ -173,9 +188,15 @@ export const RegisterForm = () => {
       </div>
       {getFieldsByStep(step)}
       <div className={`${styles.group} ${styles.button}`}>
-        <Button size='large' onClick={onHandleClick} isDisabled={isValid ? false : true}>
-          {textButton}
-        </Button>
+        {textButton === 'зарегистрироваться' ? (
+          <Button size='large' onClick={onHandleClick} isDisabled={isValid ? false : true} isSubmit={true}>
+            {textButton}
+          </Button>
+        ) : (
+          <Button size='large' onClick={onHandleClick} isDisabled={isValid ? false : true} isSubmit={true}>
+            {textButton}
+          </Button>
+        )}
         <div className={styles.groupLinks}>
           <Link to='#' className={styles.link}>
             Есть учётная запись?
