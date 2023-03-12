@@ -1,11 +1,34 @@
 import { Fragment, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { biggerLatterWithNumber, charNumber, isEmail, minLength, strLatinAlphabet } from '../../../utils/validation';
+import { isBiggerLatter, isCharNumber, isEmail, isPhone, minLength, strLatinAlphabet } from '../../../utils/validation';
 import { Button } from '../../button';
+import { Message } from '../../message/message';
+import { Modal } from '../../modal/modal';
+import { authRegister } from '../../slices/navigation-slice';
 
 import styles from './registerform.module.css';
+
+const buttonText = {
+  registration: 'зарегистрироваться',
+  nextStep: 'следующий шаг',
+  prevStep: 'последний шаг',
+};
+
+const validationTypes = {
+  minLength: 'minLength',
+  isBiggerLatter: 'isBiggerLatter',
+  strLatinAlphabet: 'strLatinAlphabet',
+  isCharNumber: 'isCharNumber',
+  isPhone: 'isPhone',
+};
+
+const inputTypesState = {
+  text: 'text',
+  password: 'password',
+};
 
 export const RegisterForm = () => {
   const [step, setStep] = useState(1);
@@ -17,13 +40,13 @@ export const RegisterForm = () => {
       errors,
       isDirty,
       isValid,
-      dirtyFields: { login = false, password = false, firstName = false, lastName = false },
+      dirtyFields: { username = false, password = false, firstName = false, lastName = false },
     },
   } = useForm({
     mode: 'all',
     defaultValues: {
       password: '',
-      login: '',
+      username: '',
       lastName: '',
       firstName: '',
       email: '',
@@ -31,8 +54,17 @@ export const RegisterForm = () => {
     },
     shouldUseNativeValidation: true,
   });
-  const onSubmit = (formValues) => console.log(formValues);
-  const textButton = step === 3 ? 'зарегистрироваться' : step === 2 ? 'последний шаг' : 'следующий шаг';
+
+  const dispatch = useDispatch();
+  const textButton = step === 3 ? buttonText.registration : step === 2 ? buttonText.prevStep : buttonText.nextStep;
+  const isMinLengthError = errors.password?.type === validationTypes.minLength;
+  const isBiggerLatterRule = errors.password?.type === validationTypes.isBiggerLatter;
+  const idCorrectPassword = isDirty && !errors.password;
+  const isCharLatinAlphabet = errors.username?.type === validationTypes.strLatinAlphabet;
+  const isCharNumberRule = errors.username?.type === validationTypes.isCharNumber;
+  const inputType = checked ? inputTypesState.text : inputTypesState.password;
+  const isSubmitButtonType = textButton === buttonText.registration ? true : false;
+  const isDisabled = isValid ? false : true;
 
   const onHandleClick = () => {
     if (step >= 3) {
@@ -42,12 +74,12 @@ export const RegisterForm = () => {
     }
   };
 
-  const isMinLengthError = errors.password?.type === 'minLength';
-  const isBiggerLatterWithNumber = errors.password?.type === 'biggerLatterWithNumber';
-  const idCorrectPassword = isDirty && !errors.password;
-  const isCharLatinAlphabet = errors.login?.type === 'strLatinAlphabet';
-  const isCharNumber = errors.login?.type === 'charNumber';
-  const inputType = checked ? 'text' : 'password';
+  const onSubmit = (formValues) => {
+    const user = formValues;
+    console.log({ onSubmit: user });
+    dispatch(authRegister(user));
+  };
+
   const getFieldsByStep = (currentStep) => {
     switch (currentStep) {
       case 1: {
@@ -55,19 +87,19 @@ export const RegisterForm = () => {
           <Fragment>
             <div className={styles.group}>
               <input
-                className={login && errors.login ? `${styles.input} ${styles.invalid}` : `${styles.input}`}
+                className={username && errors.username ? `${styles.input} ${styles.invalid}` : `${styles.input}`}
                 type='text'
-                id='login'
-                name='login'
-                {...register('login', {
-                  validate: { charNumber, strLatinAlphabet },
+                id='username'
+                name='username'
+                {...register('username', {
+                  validate: { isCharNumber, strLatinAlphabet },
                   required: true,
                 })}
               />
-              <label className={styles.label} htmlFor='login'>
+              <label className={styles.label} htmlFor='username'>
                 Придумайте логин для входа
               </label>
-              <span className={isCharNumber ? `${styles.error} ${styles.help}` : `${styles.help}`}>
+              <span className={isCharNumberRule ? `${styles.error} ${styles.help}` : `${styles.help}`}>
                 Используйте для логина{' '}
                 <span className={isCharLatinAlphabet ? styles.error : null}>латинский алфавит</span> и цифры
               </span>
@@ -80,8 +112,9 @@ export const RegisterForm = () => {
                 name='password'
                 {...register('password', {
                   validate: {
+                    isCharNumber,
                     minLength,
-                    biggerLatterWithNumber,
+                    isBiggerLatter,
                   },
                   required: true,
                 })}
@@ -101,15 +134,20 @@ export const RegisterForm = () => {
                 {idCorrectPassword && <span className={styles.correct} />}
               </label>
 
-              <span className={styles.help}>
+              <span
+                className={
+                  errors.password?.type === validationTypes.isCharNumber
+                    ? `${styles.help} ${styles.error}`
+                    : styles.help
+                }
+              >
                 Пароль <span className={isMinLengthError ? styles.error : null}>не менее 8 символов</span>,{' '}
-                <span className={isBiggerLatterWithNumber ? styles.error : null}>с заглавной буквой</span> и цифрой
+                <span className={isBiggerLatterRule ? styles.error : null}>с заглавной буквой</span> и цифрой
               </span>
             </div>
           </Fragment>
         );
       }
-
       case 2: {
         return (
           <Fragment>
@@ -142,7 +180,6 @@ export const RegisterForm = () => {
           </Fragment>
         );
       }
-
       case 3: {
         return (
           <Fragment>
@@ -152,12 +189,14 @@ export const RegisterForm = () => {
                 type='text'
                 id='phone'
                 name='phone'
-                {...register('phone', { required: 'Поле не может быть пустым' })}
+                {...register('phone', { validate: { isPhone } })}
               />
               <label className={styles.label} htmlFor='phone'>
                 Номер телефона
               </label>
-              <span className={styles.help}>В формате +375 (xx) xxx-xx-xx</span>
+              <span className={errors.phone ? `${styles.help} ${styles.error}` : `${styles.help}`}>
+                В формате +375 (xx) xxx-xx-xx
+              </span>
             </div>
             <div className={styles.group}>
               <input
@@ -181,31 +220,37 @@ export const RegisterForm = () => {
   };
 
   return (
-    <form id='register-form' className={styles.registerForm} onSubmit={handleSubmit(onSubmit)}>
-      <div className={styles.group}>
-        <h2 className={styles.title}>Регистрация</h2>
-        <strong className={styles.steps}>{step} шаг из 3</strong>
-      </div>
-      {getFieldsByStep(step)}
-      <div className={`${styles.group} ${styles.button}`}>
-        {textButton === 'зарегистрироваться' ? (
-          <Button size='large' onClick={onHandleClick} isDisabled={isValid ? false : true} isSubmit={true}>
-            {textButton}
-          </Button>
-        ) : (
-          <Button size='large' onClick={onHandleClick} isDisabled={isValid ? false : true} isSubmit={true}>
-            {textButton}
-          </Button>
-        )}
-        <div className={styles.groupLinks}>
-          <Link to='#' className={styles.link}>
-            Есть учётная запись?
-          </Link>
-          <Link to='#' className={`${styles.link} ${styles.exit}`}>
-            войти
-          </Link>
+    <Modal>
+      <form id='register-form' className={styles.registerForm} onSubmit={handleSubmit(onSubmit)}>
+        <div className={styles.group}>
+          <h2 className={styles.title}>Регистрация</h2>
+          <strong className={styles.steps}>{step} шаг из 3</strong>
         </div>
-      </div>
-    </form>
+        {getFieldsByStep(step)}
+        <div className={`${styles.group} ${styles.button}`}>
+          <Button size='large' onClick={onHandleClick} isDisabled={isDisabled} isSubmit={isSubmitButtonType}>
+            {textButton}
+          </Button>
+          <div className={styles.groupLinks}>
+            <Link to='#' className={styles.link}>
+              Есть учётная запись?
+            </Link>
+            <Link to='#' className={`${styles.link} ${styles.exit}`}>
+              войти
+            </Link>
+          </div>
+        </div>
+      </form>
+    </Modal>
   );
 };
+
+/* <Message
+        title='Данные не сохранились'
+        text='Такой логин или e-mail уже записан в системе. Попробуйте зарегистрироваться по другому логину или e-mail.'
+        Component={
+          <Button onClick={() => console.log('sending')} size='large'>
+            Отправить
+          </Button>
+        }
+      /> */

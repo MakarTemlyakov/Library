@@ -17,4 +17,20 @@ export const libraryAPI = {
 
     return response;
   },
+
+  register: async (user) => {
+    console.log({ user1: user });
+    const response = axios.post('https://strapi.cleverland.by/api/auth/local/register', {
+      email: user.email,
+      username: user.username,
+      password: user.password,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      phone: user.phone,
+    });
+
+    console.log(response);
+
+    return response;
+  },
 };

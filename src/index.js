@@ -10,6 +10,7 @@ import { AgreementPage } from './pages/agreement';
 import { BookPage } from './pages/book';
 import { Login } from './pages/login/login';
 import { MainPage } from './pages/main';
+import { Register } from './pages/register/register';
 import { TermsPage } from './pages/terms';
 
 import './index.css';
@@ -22,6 +23,7 @@ root.render(
     <Provider store={store}>
       <HashRouter>
         <Routes>
+          <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
           <Route path='/' element={<Layout />}>
             <Route element={<LayoutMainPage />}>

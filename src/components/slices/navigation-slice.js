@@ -12,6 +12,7 @@ const initialState = {
   book: null,
   isLoading: false,
   isError: ' ',
+  user: {},
 };
 
 export const fetchBooksCategories = createAsyncThunk('categories/fetchCategories', async (_, { rejectWithValue }) => {
@@ -21,6 +22,16 @@ export const fetchBooksCategories = createAsyncThunk('categories/fetchCategories
     return response.data;
   } catch (error) {
     return rejectWithValue(errorMessage);
+  }
+});
+
+export const authRegister = createAsyncThunk('auth/register', async (userData, { rejectWithValue }) => {
+  try {
+    const response = await libraryAPI.register(userData);
+
+    console.log({ register: response });
+  } catch (error) {
+    console.log('error');
   }
 });
 
@@ -76,6 +87,25 @@ const navigationSlice = createSlice({
     });
 
     builder.addCase(fetchBooksCategories.rejected, (state, action) => {
+      const newState = state;
+
+      newState.isLoading = false;
+      newState.isError = action.payload;
+    });
+
+    builder.addCase(authRegister.fulfilled, (state, action) => {
+      const newState = state;
+
+      newState.user = action.payload;
+    });
+
+    builder.addCase(authRegister.pending, (state, action) => {
+      const newState = state;
+
+      newState.isLoading = true;
+    });
+
+    builder.addCase(authRegister.rejected, (state, action) => {
       const newState = state;
 
       newState.isLoading = false;

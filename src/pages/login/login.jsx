@@ -1,14 +1,12 @@
-import { RegisterForm } from '../../components/forms/register/registerform';
-
+import { LoginForm } from '../../components/forms/login/loginform';
 import styles from './login.module.css';
 
 export const Login = () => {
-  const data = 'dsad';
+  const test = '';
 
   return (
-    <section className={styles.loginPage}>
-      <h1 className={styles.title}>Cleverland</h1>
-      <RegisterForm />
+    <section>
+      <LoginForm />
     </section>
   );
 };

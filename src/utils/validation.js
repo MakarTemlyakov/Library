@@ -1,13 +1,12 @@
 const minLength = (value) => value.length >= 7;
 
-const biggerLatterWithNumber = (value) =>
+const isCharNumber = (value) => value.split('').some((char) => !Number.isNaN(Number(char)));
+
+const isBiggerLatter = (value) =>
   value
     .replaceAll(' ', '')
     .split('')
-    .some((char) => char === char.toUpperCase() && !Number.isNaN(Number(char)));
-
-const charNumber = (value) =>
-  value.split('').some((char, index) => value.charCodeAt(index) >= 48 && value.charCodeAt(index) <= 57);
+    .some((char, index) => !isCharNumber(char) && value.charCodeAt(index) === value.toUpperCase().charCodeAt(index));
 
 const strLatinAlphabet = (value) =>
   value
@@ -24,4 +23,11 @@ const isEmail = (value) => {
   return regExp.test(value);
 };
 
-export { minLength, biggerLatterWithNumber, strLatinAlphabet, charNumber, isEmail };
+const isPhone = (value) => {
+  // eslint-disable-next-line no-useless-escape
+  const regExp1 = new RegExp(/\+375 \(\d{2}\) ([0-9]{3})\-([0-9]{2})\-([0-9]{2})/);
+
+  return regExp1.test(value);
+};
+
+export { minLength, isBiggerLatter, strLatinAlphabet, isCharNumber, isEmail, isPhone };
