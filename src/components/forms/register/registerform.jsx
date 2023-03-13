@@ -7,7 +7,7 @@ import { isBiggerLatter, isCharNumber, isEmail, isPhone, minLength, strLatinAlph
 import { Button } from '../../button';
 import { Message } from '../../message/message';
 import { Modal } from '../../modal/modal';
-import { authRegister } from '../../slices/navigation-slice';
+import { authRegister } from '../../slices/auth-slice';
 
 import styles from './registerform.module.css';
 
@@ -67,6 +67,7 @@ export const RegisterForm = () => {
   const isDisabled = isValid ? false : true;
 
   const onHandleClick = () => {
+    if (step === 3) return;
     if (step >= 3) {
       setStep(1);
     } else {
@@ -244,13 +245,3 @@ export const RegisterForm = () => {
     </Modal>
   );
 };
-
-/* <Message
-        title='Данные не сохранились'
-        text='Такой логин или e-mail уже записан в системе. Попробуйте зарегистрироваться по другому логину или e-mail.'
-        Component={
-          <Button onClick={() => console.log('sending')} size='large'>
-            Отправить
-          </Button>
-        }
-      /> */
