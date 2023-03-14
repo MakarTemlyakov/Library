@@ -30,7 +30,7 @@ const inputTypesState = {
   password: 'password',
 };
 
-export const RegisterForm = () => {
+export const RegisterForm = ({ setUserData }) => {
   const [step, setStep] = useState(1);
   const [checked, setChecked] = useState(false);
   const {
@@ -77,7 +77,9 @@ export const RegisterForm = () => {
 
   const onSubmit = (formValues) => {
     const user = formValues;
-    console.log({ onSubmit: user });
+
+    setUserData(user);
+
     dispatch(authRegister(user));
   };
 

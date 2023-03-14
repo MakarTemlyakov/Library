@@ -1,10 +1,11 @@
 import { Fragment, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { Button } from '../../button';
-import { Message } from '../../message/message';
 import { Modal } from '../../modal/modal';
+import { signIn } from '../../slices/auth-slice';
 
 import styles from './loginform.module.css';
 
@@ -13,8 +14,9 @@ const inputTypesState = {
   password: 'password',
 };
 
-export const LoginForm = () => {
+export const LoginForm = ({ setUserData }) => {
   const [checked, setChecked] = useState(false);
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
@@ -31,7 +33,14 @@ export const LoginForm = () => {
     shouldUseNativeValidation: true,
   });
 
-  const onSubmit = (formValues) => console.log(formValues);
+  const onSubmit = (formValues) => {
+    const user = formValues;
+
+    setUserData(user);
+
+    dispatch(signIn(user));
+  };
+
   const inputType = checked ? inputTypesState.text : inputTypesState.password;
 
   return (
@@ -46,6 +55,7 @@ export const LoginForm = () => {
             type='text'
             id='username'
             name='username'
+            {...register('username', { required: true })}
           />
           <label className={styles.label} htmlFor='username'>
             Логин
@@ -91,7 +101,7 @@ export const LoginForm = () => {
             <Link to='#' className={styles.link}>
               Нет учётной записи?
             </Link>
-            <Link to='#' className={`${styles.link} ${styles.exit}`}>
+            <Link to='/register' className={`${styles.link} ${styles.exit}`}>
               Регистрация
             </Link>
           </div>
