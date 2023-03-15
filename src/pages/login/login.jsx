@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 import { Button } from '../../components/button';
 import { LoginForm } from '../../components/forms/login/loginform';
@@ -23,7 +23,9 @@ export const Login = () => {
     }
   };
 
-  return (
+  return isAuth ? (
+    <Navigate to='/' />
+  ) : (
     <section>
       {!errorResponse && <LoginForm setUserData={setUserData} />}
       {isLoading && <Loader />}

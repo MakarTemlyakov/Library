@@ -1,37 +1,40 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'https://strapi.cleverland.by/api/',
-  // headers: {
-  //   Authorization: `Bearer ${localStorage.getItem('jwt')}`,
-  // },
+  baseURL: 'https://strapi.cleverland.by',
+  headers: {
+    Accept: 'application/json',
+  },
 });
+
+instance.defaults.headers.common['Content-Type'] = 'application/json';
 
 instance.interceptors.request.use(
   (config) => {
-    instance.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
+    const newConfig = config;
+    const token = localStorage.getItem('jwt');
 
-    return config;
+    newConfig.headers.Authorization = `Bearer ${token}`;
+
+    return newConfig;
   },
-  (error) => {
-    Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
 export const libraryAPI = {
   fetchCategories: async () => {
-    const response = await instance.get('categories', { crossdomain: true });
+    const response = await instance.get('/api/categories', { crossdomain: true });
 
     return response;
   },
   fetchBooks: async () => {
-    const response = await instance.get('books', { crossdomain: true });
+    const response = await instance.get('/api/books', { crossdomain: true });
 
     return response;
   },
 
   fetchBookById: async (bookId) => {
-    const response = instance.get(`books/${bookId}`, { crossdomain: true });
+    const response = instance.get(`/api/books/${bookId}`, { crossdomain: true });
 
     return response;
   },
@@ -50,11 +53,14 @@ export const libraryAPI = {
   },
 
   signIn: async (user) => {
-    console.log({ user });
-    const response = axios.post('https://strapi.cleverland.by/api/auth/local', {
-      identifier: user.username,
-      password: user.password,
-    });
+    const response = axios.post(
+      'https://strapi.cleverland.by/api/auth/local',
+      {
+        identifier: user.username,
+        password: user.password,
+      },
+      { crossdomain: true }
+    );
 
     return response;
   },

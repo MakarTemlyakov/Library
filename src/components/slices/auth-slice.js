@@ -84,7 +84,7 @@ const authSlice = createSlice({
       newState.user = { ...action.payload.userData.user };
       newState.userToken = action.payload.userData.jwt;
       newState.isAuth = true;
-      localStorage.setItem('jwt', JSON.stringify(newState.userToken));
+      localStorage.setItem('jwt', newState.userToken);
       newState.isLoading = false;
     });
 
