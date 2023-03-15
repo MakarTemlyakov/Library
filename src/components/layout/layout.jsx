@@ -14,11 +14,8 @@ export const Layout = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!isAuth) {
-      navigate('login');
-    }
     Promise.all([dispatch(fetchBooksCategories()), dispatch(fetchBooks())]);
-  }, [dispatch, navigate]);
+  }, [dispatch]);
 
   return (
     <Fragment>

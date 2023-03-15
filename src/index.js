@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { Provider } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import { Layout } from './components/layout/layout';
 import { LayoutMainPage } from './components/layoutmainpage/layoutmainpage';
+import { ProtectedRoute } from './components/routes/protctedroute';
 import { store } from './components/slices';
 import { AgreementPage } from './pages/agreement';
 import { BookPage } from './pages/book';
@@ -16,16 +17,20 @@ import { TermsPage } from './pages/terms';
 import './index.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-const isAuth = false;
 
 root.render(
   <React.StrictMode>
     <Provider store={store}>
       <HashRouter>
         <Routes>
-          <Route path='/register' element={<Register />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/' element={<Layout />}>
+          <Route
+            path='/'
+            element={
+              <ProtectedRoute>
+                <Layout />
+              </ProtectedRoute>
+            }
+          >
             <Route element={<LayoutMainPage />}>
               <Route path='/' element={<Navigate to='/books/all' />} />
               <Route path='/books/:category' element={<MainPage />} />
@@ -34,6 +39,7 @@ root.render(
             </Route>
             <Route path='/books/:category/:bookId' element={<BookPage />} />
           </Route>
+          <Route path='/login' element={<Login />} />
         </Routes>
       </HashRouter>
     </Provider>

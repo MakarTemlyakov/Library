@@ -23,9 +23,11 @@ export const Login = () => {
     }
   };
 
-  return isAuth ? (
-    <Navigate to='/' />
-  ) : (
+  if (isAuth) {
+    return <Navigate to='/' replace={true} />;
+  }
+
+  return (
     <section>
       {!errorResponse && <LoginForm setUserData={setUserData} />}
       {isLoading && <Loader />}

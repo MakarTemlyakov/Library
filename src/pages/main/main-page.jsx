@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, useParams } from 'react-router-dom';
+import { Navigate, NavLink, useParams } from 'react-router-dom';
 import classNames from 'classnames';
 
 import { CardBook } from '../../components/cardbook/cardbook';
@@ -17,7 +17,11 @@ import styles from './main-page.module.css';
 export function MainPage() {
   const [selectedTypeView, setTypeView] = useState(0);
   const [isActiveSearch, setActiveSearch] = useState(false);
-  const { isError, isLoading } = useSelector((state) => state.navigation);
+  const {
+    isError,
+    isLoading,
+    auth: { isAuth },
+  } = useSelector((state) => state);
 
   const { category } = useParams();
   const currentCategory = useSelector((state) => state.navigation.categories.find((x) => x.path === category));
