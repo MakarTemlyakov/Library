@@ -18,8 +18,7 @@ export function MainPage() {
   const [selectedTypeView, setTypeView] = useState(0);
   const [isActiveSearch, setActiveSearch] = useState(false);
   const {
-    isError,
-    isLoading,
+    navigation: { isLoading, isError },
     auth: { isAuth },
   } = useSelector((state) => state);
 

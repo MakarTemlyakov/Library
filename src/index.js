@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client';
 import { Provider, useSelector } from 'react-redux';
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 
+import { AuthLayout } from './components/authlayout/authlayout';
+import { ForgetPassword } from './components/forms/forgetpassword/forgetpassword';
 import { Layout } from './components/layout/layout';
 import { LayoutMainPage } from './components/layoutmainpage/layoutmainpage';
 import { ProtectedRoute } from './components/routes/protctedroute';
@@ -12,6 +14,7 @@ import { BookPage } from './pages/book';
 import { Login } from './pages/login/login';
 import { MainPage } from './pages/main';
 import { Register } from './pages/register/register';
+import { ResetPassword } from './pages/resetpassword/resetpassword';
 import { TermsPage } from './pages/terms';
 
 import './index.css';
@@ -19,6 +22,7 @@ import './index.css';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
+  // eslint-disable-next-line react/jsx-filename-extension
   <React.StrictMode>
     <Provider store={store}>
       <HashRouter>
@@ -39,7 +43,11 @@ root.render(
             </Route>
             <Route path='/books/:category/:bookId' element={<BookPage />} />
           </Route>
-          <Route path='/login' element={<Login />} />
+          <Route element={<AuthLayout />}>
+            <Route path='/login' element={<Login />} />
+            <Route path='/register' element={<Register />} />
+            <Route path='/forgot-pass' element={<ForgetPassword />} />
+          </Route>
         </Routes>
       </HashRouter>
     </Provider>

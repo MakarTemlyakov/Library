@@ -34,13 +34,13 @@ export const libraryAPI = {
   },
 
   fetchBookById: async (bookId) => {
-    const response = instance.get(`/api/books/${bookId}`, { crossdomain: true });
+    const response = await instance.get(`/api/books/${bookId}`, { crossdomain: true });
 
     return response;
   },
 
   register: async (user) => {
-    const response = axios.post('https://strapi.cleverland.by/api/auth/local/register', {
+    const response = await instance.post('/api/auth/local/register', {
       email: user.email,
       username: user.username,
       password: user.password,
@@ -53,14 +53,20 @@ export const libraryAPI = {
   },
 
   signIn: async (user) => {
-    const response = axios.post(
-      'https://strapi.cleverland.by/api/auth/local',
+    const response = await axios.post(
+      '/api/auth/local',
       {
         identifier: user.username,
         password: user.password,
       },
       { crossdomain: true }
     );
+
+    return response;
+  },
+
+  forgotPassword: async (email) => {
+    const response = await instance.post('/api/auth/forgot-password', { email });
 
     return response;
   },

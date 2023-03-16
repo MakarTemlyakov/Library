@@ -11,7 +11,7 @@ const initialState = {
   books: [],
   book: null,
   isLoading: false,
-  isError: ' ',
+  isError: '',
 };
 
 export const fetchBooksCategories = createAsyncThunk('categories/fetchCategories', async (_, { rejectWithValue }) => {

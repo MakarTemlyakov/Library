@@ -238,7 +238,7 @@ export const RegisterForm = ({ setUserData }) => {
             <Link to='#' className={styles.link}>
               Есть учётная запись?
             </Link>
-            <Link to='#' className={`${styles.link} ${styles.exit}`}>
+            <Link to='/login' className={`${styles.link} ${styles.exit}`}>
               войти
             </Link>
           </div>

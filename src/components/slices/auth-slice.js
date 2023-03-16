@@ -9,6 +9,7 @@ const initialState = {
   successResponse: null,
   isLoading: false,
   isAuth: false,
+  isSuccess: false,
 };
 
 export const authRegister = createAsyncThunk('auth/register', async (userData, { rejectWithValue }) => {
@@ -33,7 +34,19 @@ export const signIn = createAsyncThunk('auth/signIn', async (userData, { rejectW
       status: response.status,
     };
   } catch (error) {
-    return rejectWithValue(error.response.error);
+    return rejectWithValue(error.response.data.error);
+  }
+});
+
+export const forgotPassword = createAsyncThunk('auth/forgotPassword', async (email, { rejectWithValue }) => {
+  try {
+    const response = await libraryAPI.forgotPassword(email);
+
+    return {
+      success: response.data,
+    };
+  } catch (error) {
+    return rejectWithValue(error);
   }
 });
 
@@ -95,6 +108,27 @@ const authSlice = createSlice({
     });
 
     builder.addCase(signIn.rejected, (state, action) => {
+      const newState = state;
+
+      newState.isLoading = false;
+      newState.errorResponse = action.payload;
+    });
+
+    builder.addCase(forgotPassword.fulfilled, (state, action) => {
+      const newState = state;
+
+      newState.isSuccess = action.payload.success;
+
+      newState.isLoading = false;
+    });
+
+    builder.addCase(forgotPassword.pending, (state, action) => {
+      const newState = state;
+
+      newState.isLoading = true;
+    });
+
+    builder.addCase(forgotPassword.rejected, (state, action) => {
       const newState = state;
 
       newState.isLoading = false;

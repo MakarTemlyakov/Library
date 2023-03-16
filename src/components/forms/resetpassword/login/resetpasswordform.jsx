@@ -14,7 +14,7 @@ const inputTypesState = {
   password: 'password',
 };
 
-export const LoginForm = ({ setUserData }) => {
+export const ResetPasswordform = ({ setUserData }) => {
   const [checked, setChecked] = useState(false);
   const { errorResponse } = useSelector((state) => state.auth);
   const isInvalidCredentials = errorResponse && errorResponse.status === 400;
