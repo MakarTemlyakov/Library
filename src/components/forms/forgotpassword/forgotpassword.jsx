@@ -1,17 +1,16 @@
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useSearchParams } from 'react-router-dom';
 
 import { isEmail } from '../../../utils/validation';
 import { Button } from '../../button';
-import { forgotPassword, signIn } from '../../slices/auth-slice';
+import { forgotPassword } from '../../slices/auth-slice';
 
-import styles from './forgetpasswordform.module.css';
+import styles from './forgotpasswordform.module.css';
 
-export const ForgetPassword = () => {
-  const params = useParams();
-
+export const ForgotPasswordForm = () => {
   const dispatch = useDispatch();
+  const { errorResponse } = useSelector((state) => state.auth);
   const {
     register,
     handleSubmit,
@@ -61,6 +60,8 @@ export const ForgetPassword = () => {
           </label>
           {errors.email ? (
             <span className={`${styles.help} ${styles.error}`}>Введите корректный e-mail</span>
+          ) : errorResponse ? (
+            <span className={`${styles.help} ${styles.error}`}>errr</span>
           ) : (
             <span className={styles.help}>
               На это email будет отправлено письмо с инструкциями по восстановлению пароля

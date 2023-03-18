@@ -1,1 +1,0 @@
-import { ResetPasswordform } from './resetpasswordform';

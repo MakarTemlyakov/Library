@@ -130,7 +130,7 @@ export const RegisterForm = ({ setUserData }) => {
                   className={styles.checkboxInput}
                   type='checkbox'
                   id='show-password'
-                  onChange={() => setChecked(!checked)}
+                  onChange={(e) => setChecked(!checked)}
                   checked={checked}
                 />
                 <span className={styles.checkMark} />

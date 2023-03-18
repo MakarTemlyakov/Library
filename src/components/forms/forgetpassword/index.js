@@ -1,1 +1,0 @@
-import { ForgetPassword } from './forgetpassword';

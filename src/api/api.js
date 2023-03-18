@@ -7,14 +7,15 @@ const instance = axios.create({
   },
 });
 
-instance.defaults.headers.common['Content-Type'] = 'application/json';
-
 instance.interceptors.request.use(
   (config) => {
     const newConfig = config;
+
     const token = localStorage.getItem('jwt');
 
-    newConfig.headers.Authorization = `Bearer ${token}`;
+    if (token) {
+      newConfig.headers.Authorization = `Bearer ${token}`;
+    }
 
     return newConfig;
   },
@@ -53,7 +54,7 @@ export const libraryAPI = {
   },
 
   signIn: async (user) => {
-    const response = await axios.post(
+    const response = await instance.post(
       '/api/auth/local',
       {
         identifier: user.username,
@@ -67,6 +68,16 @@ export const libraryAPI = {
 
   forgotPassword: async (email) => {
     const response = await instance.post('/api/auth/forgot-password', { email });
+
+    return response;
+  },
+
+  resetPassword: async (credentials) => {
+    const response = await instance.post('/api/auth/reset-password', {
+      password: credentials.newPassword,
+      passwordConfirmation: credentials.confirmPassword,
+      code: credentials.code,
+    });
 
     return response;
   },

@@ -4,17 +4,16 @@ import { Provider, useSelector } from 'react-redux';
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import { AuthLayout } from './components/authlayout/authlayout';
-import { ForgetPassword } from './components/forms/forgetpassword/forgetpassword';
 import { Layout } from './components/layout/layout';
 import { LayoutMainPage } from './components/layoutmainpage/layoutmainpage';
 import { ProtectedRoute } from './components/routes/protctedroute';
 import { store } from './components/slices';
 import { AgreementPage } from './pages/agreement';
 import { BookPage } from './pages/book';
+import { ForgotPassword } from './pages/forgotpassword/forgotpassword';
 import { Login } from './pages/login/login';
 import { MainPage } from './pages/main';
 import { Register } from './pages/register/register';
-import { ResetPassword } from './pages/resetpassword/resetpassword';
 import { TermsPage } from './pages/terms';
 
 import './index.css';
@@ -46,7 +45,7 @@ root.render(
           <Route element={<AuthLayout />}>
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
-            <Route path='/forgot-pass' element={<ForgetPassword />} />
+            <Route path='/forgot-pass' element={<ForgotPassword />} />
           </Route>
         </Routes>
       </HashRouter>
