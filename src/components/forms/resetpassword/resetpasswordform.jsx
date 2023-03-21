@@ -56,7 +56,7 @@ export const ResetPasswordForm = ({ code }) => {
       passwordConfirmation: formValues.confirmPassword,
       code,
     };
-    console.log({ f1: credentials });
+
     dispatch(resetPassword(credentials));
   };
 

@@ -15,10 +15,11 @@ export const Register = () => {
   const [userData, setUserData] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isShowForm = !errorResponse;
+  const isShowForm = !errorResponse && !successResponse;
   const isShowSuccessMessage = successResponse && successResponse === 200;
   const isShowFailedMessage = errorResponse && errorResponse.status !== 400;
   const isShowInvalidEmailMessage = errorResponse && errorResponse.status === 400;
+
   const clearSuccsesResponse = () => {
     dispatch(removeSuccess());
     navigate('/login');

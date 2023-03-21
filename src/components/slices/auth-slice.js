@@ -51,12 +51,11 @@ export const forgotPassword = createAsyncThunk('auth/forgotPassword', async (ema
 });
 
 export const resetPassword = createAsyncThunk('auth/resetPassword', async (credentials, { rejectWithValue }) => {
-  console.log({ resetPassword: credentials });
   try {
     const response = await libraryAPI.resetPassword(credentials);
 
     return {
-      userData: response.data,
+      successStatus: response.status,
     };
   } catch (error) {
     return rejectWithValue(error.response.data.error);
@@ -151,9 +150,7 @@ const authSlice = createSlice({
     builder.addCase(resetPassword.fulfilled, (state, action) => {
       const newState = state;
 
-      newState.userToken = action.payload.userData.jwt;
-      localStorage.setItem('jwt', newState.userToken);
-
+      newState.successResponse = { ...newState.successResponse, status: action.payload.successStatus };
       newState.isLoading = false;
     });
 

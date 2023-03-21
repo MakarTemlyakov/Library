@@ -2,9 +2,6 @@ import axios from 'axios';
 
 const instance = axios.create({
   baseURL: 'https://strapi.cleverland.by',
-  headers: {
-    Accept: 'application/json',
-  },
 });
 
 instance.interceptors.request.use(
@@ -28,6 +25,17 @@ export const libraryAPI = {
 
     return response;
   },
+
+  resetPassword: async (credentials) => {
+    const response = await instance.post('/api/auth/reset-password', {
+      password: credentials.password,
+      passwordConfirmation: credentials.passwordConfirmation,
+      code: credentials.code,
+    });
+
+    return response;
+  },
+
   fetchBooks: async () => {
     const response = await instance.get('/api/books', { crossdomain: true });
 
@@ -68,16 +76,6 @@ export const libraryAPI = {
 
   forgotPassword: async (email) => {
     const response = await instance.post('/api/auth/forgot-password', { email });
-
-    return response;
-  },
-
-  resetPassword: async (credentials) => {
-    const response = await instance.post('/api/auth/reset-password', {
-      password: credentials.newPassword,
-      passwordConfirmation: credentials.confirmPassword,
-      code: credentials.code,
-    });
 
     return response;
   },
