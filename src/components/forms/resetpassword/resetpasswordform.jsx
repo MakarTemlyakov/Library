@@ -45,6 +45,7 @@ export const ResetPasswordForm = ({ code }) => {
   const isMinLengthError = errors.newPassword?.type === validationTypes.minLength;
   const isBiggerLatterRule = errors.newPassword?.type === validationTypes.isBiggerLatter;
   const isMatchPasswords = newPassword === confirmPassword;
+  const idCorrectPassword = !errors.newPassword;
 
   const onChecked = (e) => {
     setChecked({ ...checked, [e.target.name]: e.target.checked });
@@ -68,7 +69,7 @@ export const ResetPasswordForm = ({ code }) => {
       <div className={styles.group}>
         <input
           className={styles.input}
-          type={checked.newPassword ? 'text' : 'password'}
+          type={checked.newPassword ? inputTypesState.text : inputTypesState.password}
           id='newPassword'
           {...register('newPassword', { required: true, validate: { isCharNumber, minLength, isBiggerLatter } })}
         />
@@ -83,8 +84,12 @@ export const ResetPasswordForm = ({ code }) => {
             checked={checked.newPassword}
             name='newPassword'
           />
-          <span className={styles.checkMark} />
+          <div className={styles.marksWrapper}>
+            <span className={styles.checkMark} />
+            {idCorrectPassword && <span className={styles.correct} />}
+          </div>
         </label>
+
         <span className={isCharNumberRule ? `${styles.help} ${styles.error}` : styles.help}>
           Пароль <span className={isMinLengthError ? styles.error : null}>не менее 8 символов</span>,{' '}
           <span className={isBiggerLatterRule ? styles.error : null}>с заглавной буквой</span> и цифрой
@@ -92,13 +97,14 @@ export const ResetPasswordForm = ({ code }) => {
       </div>
       <div className={styles.group}>
         <input
-          type={checked.confirmPassword ? 'text' : 'password'}
+          type={checked.confirmPassword ? inputTypesState.text : inputTypesState.password}
           className={
             dirtyFields.confirmPassword && !isMatchPasswords ? `${styles.input} ${styles.invalid}` : `${styles.input}`
           }
           id='confirmPassword'
           {...register('confirmPassword', { required: true })}
         />
+
         <label className={styles.label} htmlFor='confirmPassword'>
           Повторите пароль
         </label>
@@ -110,7 +116,9 @@ export const ResetPasswordForm = ({ code }) => {
             checked={checked.confirmPassword}
             name='confirmPassword'
           />
-          <span className={styles.checkMark} />
+          <div className={styles.marksWrapper}>
+            <span className={styles.checkMark} />
+          </div>
         </label>
 
         {dirtyFields.confirmPassword && !isMatchPasswords && (

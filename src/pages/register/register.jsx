@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 import { Button } from '../../components/button';
 import { RegisterForm } from '../../components/forms/register/registerform';
@@ -19,6 +19,18 @@ export const Register = () => {
   const isShowSuccessMessage = successResponse && successResponse === 200;
   const isShowFailedMessage = errorResponse && errorResponse.status !== 400;
   const isShowInvalidEmailMessage = errorResponse && errorResponse.status === 400;
+
+  const isCheckAuth = useCallback(() => {
+    const token = localStorage.getItem('jwt');
+
+    if (token) {
+      navigate('/');
+    }
+  }, [navigate]);
+
+  useEffect(() => {
+    isCheckAuth();
+  }, [isCheckAuth]);
 
   const clearSuccsesResponse = () => {
     dispatch(removeSuccess());

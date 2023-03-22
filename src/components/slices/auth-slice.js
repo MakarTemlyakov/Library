@@ -78,6 +78,15 @@ const authSlice = createSlice({
 
       newState.successResponse = null;
     },
+
+    logout: (state, action) => {
+      const newState = state;
+
+      newState.user = null;
+      localStorage.removeItem('jwt');
+      newState.isAuth = false;
+      newState.userToken = null;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(authRegister.fulfilled, (state, action) => {
@@ -171,7 +180,7 @@ const authSlice = createSlice({
 
 const { reducer } = authSlice;
 
-export const { removeError, removeSuccess } = authSlice.actions;
+export const { removeError, removeSuccess, logout } = authSlice.actions;
 
 // eslint-disable-next-line import/no-default-export
 export default reducer;

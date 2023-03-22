@@ -33,6 +33,32 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: relative;
+}
+
+.userMenu {
+  display: none;
+  overflow: hidden;
+  flex-direction: column;
+  width: 100%;
+  padding: 5px 10px;
+  position: absolute;
+  bottom: -20px;
+  border-radius: 5px;
+  background: #ececec;
+  transition: 1.5s ease-in;
+}
+
+.user:hover .userMenu {
+  display: flex;
+}
+
+.logout {
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  border: transparent;
+  background: transparent;
 }
 
 .userInfo {

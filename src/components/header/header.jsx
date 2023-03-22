@@ -1,11 +1,12 @@
-import { useEffect, useRef } from 'react';
+import { createRef, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, useLocation, useParams } from 'react-router-dom';
+import { Link, Navigate, NavLink, useLocation, useNavigate, useParams } from 'react-router-dom';
 import cn from 'classnames';
 
 import avatar from '../../assets/img/avatar.png';
 import logo from '../../assets/img/logo.svg';
 import { BurgerMenu } from '../burger-menu/burger-menu';
+import { logout } from '../slices/auth-slice';
 import { toggleModeMenu } from '../slices/navigation-slice';
 
 import styles from './header.module.css';
@@ -17,6 +18,7 @@ export const Header = () => {
   const burgerRef = useRef(null);
   const location = useLocation();
   const routeCategory = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const onLeaveClick = (e) => {
@@ -45,6 +47,11 @@ export const Header = () => {
     dispatch(toggleModeMenu(!isActiveMenu));
   };
 
+  const logoutOnClick = () => {
+    dispatch(logout());
+    navigate('/login');
+  };
+
   return (
     <header className={styles.header} data-test-id='header'>
       <div className='container'>
@@ -60,9 +67,17 @@ export const Header = () => {
           </button>
           {isActiveMenu && <BurgerMenu burgerRef={burgerRef} />}
           <h3 className={styles.title}>Библиотека</h3>
+
           <div className={styles.user}>
             <span className={styles.userInfo}>Привет, Иван!</span>
             <img className={styles.userAvatar} src={avatar} alt='' />
+            <ul className={styles.userMenu}>
+              <li>
+                <button className={styles.logout} type='button' onClick={logoutOnClick}>
+                  Выход
+                </button>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
