@@ -41,7 +41,8 @@
 .layoutBooks {
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
+
+  height: 100%;
 }
 
 .bookCards {
@@ -277,6 +278,15 @@
   text-transform: uppercase;
   cursor: pointer;
   min-width: 166px;
+}
+
+.categoryEmpty {
+  color: #a7a7a7;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 40px;
+  text-align: center;
+  margin: auto;
 }
 
 .buttonViewList {

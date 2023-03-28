@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, NavLink, useParams } from 'react-router-dom';
 import classNames from 'classnames';
@@ -17,12 +17,13 @@ import styles from './main-page.module.css';
 export function MainPage() {
   const [selectedTypeView, setTypeView] = useState(0);
   const [isActiveSearch, setActiveSearch] = useState(false);
+  const [isChangedSortType, setIsChangedSortType] = useState(false);
+  const { category } = useParams();
   const {
     navigation: { isLoading, isError },
     auth: { isAuth },
   } = useSelector((state) => state);
 
-  const { category } = useParams();
   const currentCategory = useSelector((state) => state.navigation.categories.find((x) => x.path === category));
   const books = useSelector((state) => state.navigation.books);
   const booksByCategory =
@@ -32,6 +33,8 @@ export function MainPage() {
   const onChangeType = (type) => {
     setTypeView(type);
   };
+
+  const changeSortType = () => setIsChangedSortType(!isChangedSortType);
 
   const turnOnActiveSearch = () => {
     setActiveSearch(true);
@@ -76,19 +79,19 @@ export function MainPage() {
           >
             <CloseIcon />
           </button>
-          <RateButton isActiveSearch={isActiveSearch} />
+          <RateButton isActiveSearch={isActiveSearch} onClick={changeSortType} />
           <TileButton selectedTypeView={selectedTypeView} onChangeType={onChangeType} isActiveSearch={isActiveSearch} />
           <ListButton selectedTypeView={selectedTypeView} onChangeType={onChangeType} isActiveSearch={isActiveSearch} />
         </div>
-        <ul
-          className={
-            isListView
-              ? `${styles.bookCards} ${styles.bookCardsListView}`
-              : `${styles.bookCards} ${styles.bookCardsTileView}`
-          }
-        >
-          {booksByCategory.length > 0 &&
-            booksByCategory.map((book) => (
+        {booksByCategory.length > 0 ? (
+          <ul
+            className={
+              isListView
+                ? `${styles.bookCards} ${styles.bookCardsListView}`
+                : `${styles.bookCards} ${styles.bookCardsTileView}`
+            }
+          >
+            {booksByCategory.map((book) => (
               <li key={book.id}>
                 <NavLink to={`/books/${currentCategory?.path}/${book.id}`}>
                   <CardBook
@@ -105,7 +108,10 @@ export function MainPage() {
                 </NavLink>
               </li>
             ))}
-        </ul>
+          </ul>
+        ) : (
+          <div className={styles.categoryEmpty}>В этой категории книг ещё нет</div>
+        )}
       </div>
     </section>
   );

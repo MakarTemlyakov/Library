@@ -2,11 +2,12 @@ import cn from 'classnames';
 
 import styles from './ratebutton.module.css';
 
-export const RateButton = ({ isActiveSearch }) => (
+export const RateButton = ({ isActiveSearch, onClick }) => (
   <button
     className={isActiveSearch ? cn(styles.hidden) : cn(styles.rateButton)}
     type='button'
     data-test-id='ratiing-button'
+    onClick={onClick}
   >
     <svg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'>
       <g opacity='0.9'>
