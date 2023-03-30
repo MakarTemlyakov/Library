@@ -17,6 +17,10 @@
   cursor: pointer;
 }
 
+.scaleIcon {
+  transform: scale(1, -1);
+}
+
 @media (max-width: 768px) {
   .rateButton {
     margin-right: 108px;

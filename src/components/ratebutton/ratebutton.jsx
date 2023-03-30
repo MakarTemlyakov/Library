@@ -2,14 +2,21 @@ import cn from 'classnames';
 
 import styles from './ratebutton.module.css';
 
-export const RateButton = ({ isActiveSearch, onClick }) => (
+export const RateButton = ({ isActiveSearch, onClick, isChangedSortType }) => (
   <button
     className={isActiveSearch ? cn(styles.hidden) : cn(styles.rateButton)}
     type='button'
     data-test-id='ratiing-button'
     onClick={onClick}
   >
-    <svg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'>
+    <svg
+      width='16'
+      height='16'
+      viewBox='0 0 16 16'
+      fill='none'
+      xmlns='http://www.w3.org/2000/svg'
+      className={isChangedSortType ? styles.scaleIcon : null}
+    >
       <g opacity='0.9'>
         <path
           fillRule='evenodd'
