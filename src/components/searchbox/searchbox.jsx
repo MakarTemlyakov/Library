@@ -12,8 +12,6 @@ export const SearchBox = ({ isCollapse, onSearch }) => {
     onSearch(searchValue);
   };
 
-  console.log({ searchValue });
-
   return (
     <input
       data-test-id='input-search'

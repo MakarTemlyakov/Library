@@ -7,7 +7,17 @@ import { StarIcon } from '../icons/star/star-icon';
 
 import styles from './cardbook.module.css';
 
-export const CardBook = ({ isListView, isHasImg, rating, author, title, bookedTill, year, isBooked }) => {
+export const CardBook = ({
+  isListView,
+  isHasImg,
+  rating,
+  author,
+  title,
+  bookedTill,
+  year,
+  isBooked,
+  searchBookValue,
+}) => {
   const cardClass = cn(styles.bookCard, {
     [styles.bookCardViewList]: isListView,
     [styles.bookCardViewTile]: !isListView,
@@ -36,6 +46,23 @@ export const CardBook = ({ isListView, isHasImg, rating, author, title, bookedTi
     [styles.bookCardAuthorViewTile]: !isListView,
   });
 
+  const getHighlightSearchWord = (bookTitle) => {
+    if (searchBookValue === '') {
+      return bookTitle;
+    }
+
+    const searchTitle = bookTitle.split(' ').map((word) =>
+      word.includes(searchBookValue) ? (
+        <span key={word} style={{ color: 'orange' }}>
+          {word}
+        </span>
+      ) : (
+        word
+      )
+    );
+
+    return searchTitle;
+  };
   const btnClass = cn(styles.button, { [styles.buttonViewList]: isListView, [styles.buttonViewTile]: !isListView });
 
   return (
@@ -66,7 +93,7 @@ export const CardBook = ({ isListView, isHasImg, rating, author, title, bookedTi
           <span className={bookCardRating}>еще нет оценок</span>
         )}
 
-        <h6 className={bookCardTitle}>{title}</h6>
+        <h6 className={bookCardTitle}>{getHighlightSearchWord(title)}</h6>
         <p className={bookCardAuthor}>
           {author}, <time dateTime={year}>{year}</time>
         </p>

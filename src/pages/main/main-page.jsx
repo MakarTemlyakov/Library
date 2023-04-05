@@ -18,16 +18,21 @@ export function MainPage() {
   const { category } = useParams();
   const books = useSelector((state) => state.navigation.books);
   const currentCategory = useSelector((state) => state.navigation.categories.find((x) => x.path === category));
-
+  const [booksByCategory, setBooksByCategory] = useState(books);
+  const [searchedBooks, setSearchedBooks] = useState([]);
   const [selectedTypeView, setTypeView] = useState(0);
   const [isActiveSearch, setActiveSearch] = useState(false);
   const [isChangedSortType, setIsChangedSortType] = useState(false);
-  const [sortedBooks, setSortedBooks] = useState([]);
+  const [searchBookValue, setSearchBookValue] = useState('');
+
+  const isListView = selectedTypeView === 1;
 
   const searchFilter = (searchValue) => {
-    const searchedBooks = sortedBooks.filter((book) => book.title.toLowerCase().includes(searchValue.toLowerCase()));
+    const filtredBooks = booksByCategory.filter((book) => book.title.toLowerCase().includes(searchValue.toLowerCase()));
 
-    setSortedBooks(searchedBooks);
+    setSearchBookValue(searchValue);
+
+    setSearchedBooks(filtredBooks);
   };
 
   const {
@@ -38,45 +43,35 @@ export function MainPage() {
   const activeClass = classNames(styles.searchIcon, { [styles.hiddenButton]: isActiveSearch });
 
   const sortBooks = useCallback(
-    (filtredbooks) => {
+    (filterdBooks) => {
       let sorted = [];
 
       if (isChangedSortType) {
-        sorted = filtredbooks.sort((a, b) => a.rating - b.rating);
+        sorted = [...filterdBooks].sort((a, b) => a.rating - b.rating);
       } else {
-        sorted = filtredbooks.sort((a, b) => b.rating - a.rating);
+        sorted = [...filterdBooks].sort((a, b) => b.rating - a.rating);
       }
-      setSortedBooks(sorted);
+
+      setBooksByCategory(sorted);
+      setSearchedBooks(sorted);
     },
     [isChangedSortType]
   );
 
-  const filteredBooks = useCallback(() => {
+  useEffect(() => {
     const filterdBooks =
       category === 'all' ? books : books.filter((book) => book.categories.some((c) => c === currentCategory?.name));
 
     sortBooks(filterdBooks);
-  }, [currentCategory?.name, category, books, sortBooks]);
-
-  useEffect(() => {
-    filteredBooks();
-  }, [filteredBooks]);
-
-  const onChangeType = (type) => {
-    setTypeView(type);
-  };
+  }, [sortBooks, books, currentCategory?.name, category]);
 
   const changeSortType = () => setIsChangedSortType(!isChangedSortType);
 
-  const turnOnActiveSearch = () => {
-    setActiveSearch(true);
-  };
+  const turnOnActiveSearch = () => setActiveSearch(true);
 
-  const turnOffActiveSearch = () => {
-    setActiveSearch(false);
-  };
+  const turnOffActiveSearch = () => setActiveSearch(false);
 
-  const isListView = selectedTypeView === 1;
+  const onChangeType = (type) => setTypeView(type);
 
   return isLoading ? (
     <Loader />
@@ -115,7 +110,7 @@ export function MainPage() {
           <TileButton selectedTypeView={selectedTypeView} onChangeType={onChangeType} isActiveSearch={isActiveSearch} />
           <ListButton selectedTypeView={selectedTypeView} onChangeType={onChangeType} isActiveSearch={isActiveSearch} />
         </div>
-        {sortedBooks.length > 0 ? (
+        {searchedBooks.length > 0 ? (
           <ul
             className={
               isListView
@@ -123,7 +118,7 @@ export function MainPage() {
                 : `${styles.bookCards} ${styles.bookCardsTileView}`
             }
           >
-            {sortedBooks.map((book) => (
+            {searchedBooks.map((book) => (
               <li key={book.id}>
                 <NavLink to={`/books/${currentCategory?.path}/${book.id}`}>
                   <CardBook
@@ -136,6 +131,7 @@ export function MainPage() {
                     bookedTill={book.bookedTill}
                     year={book.year}
                     isBooked={book.isBooked}
+                    searchBookValue={searchBookValue}
                   />
                 </NavLink>
               </li>
