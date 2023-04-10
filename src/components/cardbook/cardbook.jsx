@@ -1,3 +1,4 @@
+import { Fragment, useCallback, useEffect, useState } from 'react';
 import cn from 'classnames';
 
 import bookiMG from '../../assets/img/111.png';
@@ -18,6 +19,8 @@ export const CardBook = ({
   isBooked,
   searchBookValue,
 }) => {
+  const [highlightWord, setHighlightWord] = useState(title);
+
   const cardClass = cn(styles.bookCard, {
     [styles.bookCardViewList]: isListView,
     [styles.bookCardViewTile]: !isListView,
@@ -46,23 +49,22 @@ export const CardBook = ({
     [styles.bookCardAuthorViewTile]: !isListView,
   });
 
-  const getHighlightSearchWord = (bookTitle) => {
-    if (searchBookValue === '') {
-      return bookTitle;
-    }
+  const getHighlightSearchWord = useCallback(() => {
+    const words = title.split(new RegExp(`(${searchBookValue})`, 'gi'));
 
-    const searchTitle = bookTitle.split(' ').map((word) =>
-      word.includes(searchBookValue) ? (
-        <span key={word} style={{ color: 'orange' }}>
-          {word}
-        </span>
+    return words.map((char) =>
+      char.toLocaleLowerCase() === searchBookValue.toLocaleLowerCase() ? (
+        <span style={{ color: 'red' }}>{char}</span>
       ) : (
-        word
+        char
       )
     );
+  }, [title, searchBookValue]);
 
-    return searchTitle;
-  };
+  useEffect(() => {
+    getHighlightSearchWord();
+  }, [getHighlightSearchWord]);
+
   const btnClass = cn(styles.button, { [styles.buttonViewList]: isListView, [styles.buttonViewTile]: !isListView });
 
   return (
@@ -93,7 +95,8 @@ export const CardBook = ({
           <span className={bookCardRating}>еще нет оценок</span>
         )}
 
-        <h6 className={bookCardTitle}>{getHighlightSearchWord(title)}</h6>
+        <h6 className={bookCardTitle}>{getHighlightSearchWord()}</h6>
+
         <p className={bookCardAuthor}>
           {author}, <time dateTime={year}>{year}</time>
         </p>

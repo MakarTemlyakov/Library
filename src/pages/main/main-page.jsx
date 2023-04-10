@@ -27,13 +27,18 @@ export function MainPage() {
 
   const isListView = selectedTypeView === 1;
 
-  const searchFilter = (searchValue) => {
-    const filtredBooks = booksByCategory.filter((book) => book.title.toLowerCase().includes(searchValue.toLowerCase()));
+  const searchFilter = useCallback(
+    (searchValue) => {
+      const filtredBooks = booksByCategory.filter((book) =>
+        book.title.toLowerCase().includes(searchValue.toLowerCase())
+      );
 
-    setSearchBookValue(searchValue);
+      setSearchBookValue(searchValue);
 
-    setSearchedBooks(filtredBooks);
-  };
+      setSearchedBooks(filtredBooks);
+    },
+    [booksByCategory]
+  );
 
   const {
     navigation: { isLoading, isError },
@@ -72,6 +77,8 @@ export function MainPage() {
   const turnOffActiveSearch = () => setActiveSearch(false);
 
   const onChangeType = (type) => setTypeView(type);
+
+  console.log({ searchBookValue });
 
   return isLoading ? (
     <Loader />

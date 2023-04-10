@@ -9,7 +9,7 @@ export const SearchBox = ({ isCollapse, onSearch }) => {
 
   const searchChange = (e) => {
     setSearchValue(e.target.value);
-    onSearch(searchValue);
+    onSearch(e.target.value);
   };
 
   return (
