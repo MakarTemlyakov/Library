@@ -11,19 +11,16 @@ import { signIn } from '../../components/slices/auth-slice';
 import styles from './login.module.css';
 
 export const Login = () => {
-  const { isLoading, errorResponse, userToken } = useSelector((state) => state.auth);
+  const { isLoading, errorResponse } = useSelector((state) => state.auth);
   const [userData, setUserData] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const userToken = localStorage.getItem('jwt');
 
   useEffect(() => {
-    const isCheckAuth = () => {
-      if (userToken) {
-        navigate('/');
-      }
-    };
-
-    isCheckAuth();
+    if (userToken) {
+      navigate('/');
+    }
   }, [navigate, userToken]);
 
   const repeatSendingUserData = () => {

@@ -1,22 +1,26 @@
 import { Fragment, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Outlet, useNavigate } from 'react-router-dom';
 
 import { Footer } from '../footer/footer';
 import { Header } from '../header';
-import { fetchBooks, fetchBooksCategories } from '../slices/navigation-slice';
+import { initUser } from '../slices/auth-slice';
+import { fetchBooks } from '../slices/books-slice';
+import { fetchBooksCategories } from '../slices/navigation-slice';
 
 const isAuth = false;
 
 export const Layout = () => {
-  const [isActiveMenu, setActiveMenu] = useState(false);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    Promise.all([dispatch(fetchBooksCategories()), dispatch(fetchBooks())]);
+    dispatch(fetchBooksCategories());
+    dispatch(fetchBooks());
+    dispatch(initUser());
   }, [dispatch]);
 
+  console.log({ user });
   return (
     <Fragment>
       <Header />

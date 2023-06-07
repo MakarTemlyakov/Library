@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Navigate, NavLink, useParams } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import classNames from 'classnames';
 
 import { CardBook } from '../../components/cardbook/cardbook';
@@ -9,6 +9,7 @@ import { ListButton } from '../../components/listbutton/listbutton';
 import { Loader } from '../../components/loader/loader';
 import { RateButton } from '../../components/ratebutton/ratebutton';
 import { SearchBox } from '../../components/searchbox/searchbox';
+import { fetchBooks } from '../../components/slices/books-slice';
 import { TileButton } from '../../components/tilebutton/tilebutton';
 import { ToastMessage } from '../../components/toastmessage/testmessage';
 
@@ -16,59 +17,60 @@ import styles from './main-page.module.css';
 
 export function MainPage() {
   const { category } = useParams();
-  const books = useSelector((state) => state.navigation.books);
-  const currentCategory = useSelector((state) => state.navigation.categories.find((x) => x.path === category));
-  const [booksByCategory, setBooksByCategory] = useState(books);
-  const [searchedBooks, setSearchedBooks] = useState([]);
+
+  const {
+    books: { books },
+    navigation: { categories },
+  } = useSelector((state) => state);
+
+  const {
+    navigation: { isLoading, isError },
+    auth,
+  } = useSelector((state) => state);
+
+  const currentCategory = categories.find((x) => x.path === category);
+  const dispatch = useDispatch();
+  const [sortedBooks, setSortedBooks] = useState(books);
   const [selectedTypeView, setTypeView] = useState(0);
   const [isActiveSearch, setActiveSearch] = useState(false);
   const [isChangedSortType, setIsChangedSortType] = useState(false);
   const [searchBookValue, setSearchBookValue] = useState('');
 
+  useEffect(() => {
+    // if (categories.length !== 0) {
+    //   dispatch(fetchBooks());
+    // }
+  }, [dispatch, categories.length]);
+
   const isListView = selectedTypeView === 1;
-
-  const searchFilter = useCallback(
-    (searchValue) => {
-      const filtredBooks = booksByCategory.filter((book) =>
-        book.title.toLowerCase().includes(searchValue.toLowerCase())
-      );
-
-      setSearchBookValue(searchValue);
-
-      setSearchedBooks(filtredBooks);
-    },
-    [booksByCategory]
-  );
-
-  const {
-    navigation: { isLoading, isError },
-    auth: { isAuth },
-  } = useSelector((state) => state);
 
   const activeClass = classNames(styles.searchIcon, { [styles.hiddenButton]: isActiveSearch });
 
   const sortBooks = useCallback(
-    (filterdBooks) => {
-      let sorted = [];
+    (searchecBooks) => {
+      const sorted = [...searchecBooks].sort((a, b) => (isChangedSortType ? a.rating - b.rating : b.rating - a.rating));
 
-      if (isChangedSortType) {
-        sorted = [...filterdBooks].sort((a, b) => a.rating - b.rating);
-      } else {
-        sorted = [...filterdBooks].sort((a, b) => b.rating - a.rating);
-      }
-
-      setBooksByCategory(sorted);
-      setSearchedBooks(sorted);
+      setSortedBooks(sorted);
     },
     [isChangedSortType]
   );
 
-  useEffect(() => {
-    const filterdBooks =
-      category === 'all' ? books : books.filter((book) => book.categories.some((c) => c === currentCategory?.name));
+  const searchFilter = useCallback(() => {
+    const searchecBooks =
+      category === 'all'
+        ? books
+        : books.filter(
+            (book) =>
+              book.categories.some((c) => c === currentCategory?.name) &&
+              book.title.toLowerCase().includes(searchBookValue.toLowerCase())
+          );
 
-    sortBooks(filterdBooks);
-  }, [sortBooks, books, currentCategory?.name, category]);
+    sortBooks(searchecBooks);
+  }, [category, currentCategory?.name, books, sortBooks, searchBookValue]);
+
+  useEffect(() => {
+    searchFilter();
+  }, [searchFilter]);
 
   const changeSortType = () => setIsChangedSortType(!isChangedSortType);
 
@@ -77,8 +79,6 @@ export function MainPage() {
   const turnOffActiveSearch = () => setActiveSearch(false);
 
   const onChangeType = (type) => setTypeView(type);
-
-  console.log({ searchBookValue });
 
   return isLoading ? (
     <Loader />
@@ -104,7 +104,7 @@ export function MainPage() {
               />
             </svg>
           </button>
-          <SearchBox isCollapse={isActiveSearch} onSearch={searchFilter} />
+          <SearchBox isCollapse={isActiveSearch} onSearch={setSearchBookValue} />
           <button
             className={styles.closeButton}
             type='button'
@@ -117,7 +117,8 @@ export function MainPage() {
           <TileButton selectedTypeView={selectedTypeView} onChangeType={onChangeType} isActiveSearch={isActiveSearch} />
           <ListButton selectedTypeView={selectedTypeView} onChangeType={onChangeType} isActiveSearch={isActiveSearch} />
         </div>
-        {searchedBooks.length > 0 ? (
+
+        {sortedBooks.length > 0 ? (
           <ul
             className={
               isListView
@@ -125,9 +126,9 @@ export function MainPage() {
                 : `${styles.bookCards} ${styles.bookCardsTileView}`
             }
           >
-            {searchedBooks.map((book) => (
+            {sortedBooks.map((book) => (
               <li key={book.id}>
-                <NavLink to={`/books/${currentCategory?.path}/${book.id}`}>
+                <NavLink to={`/books/${currentCategory.path}/${book.id}`}>
                   <CardBook
                     bookId={book.id}
                     isHasImg={book.image}
@@ -138,6 +139,7 @@ export function MainPage() {
                     bookedTill={book.bookedTill}
                     year={book.year}
                     isBooked={book.isBooked}
+                    image={book.image}
                     searchBookValue={searchBookValue}
                   />
                 </NavLink>

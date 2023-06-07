@@ -11,20 +11,8 @@ export const CategoriesList = ({ navigationBooks, burgerBooks, categories }) => 
   const isActiveMenu = useSelector((state) => state.navigation.isMenuActive);
   const activeStyle = cn(styles.bookList, { [styles.bookListHidden]: !isVisibleCategoryList });
 
-  const getCountBooks = (categoryName) =>
-    books.filter((book) => book.categories.some((category) => category === categoryName)).length;
-
   return (
     <ul className={activeStyle}>
-      <li className={styles.bookListItem}>
-        <NavLink
-          to='books/all'
-          className={({ isActive }) => (isActive ? styles.active : null)}
-          data-test-id={isActiveMenu ? burgerBooks : navigationBooks}
-        >
-          Все книги
-        </NavLink>
-      </li>
       {categories.map((category) => (
         <li key={category.id} className={styles.bookListItem}>
           <NavLink
@@ -32,7 +20,7 @@ export const CategoriesList = ({ navigationBooks, burgerBooks, categories }) => 
             className={({ isActive }) => (isActive ? styles.active : null)}
             data-test-id={isActiveMenu ? burgerBooks : navigationBooks}
           >
-            {category.name} <span className={styles.bookCount}>{getCountBooks(category.name)}</span>
+            {category.name} <span className={styles.bookCount}>{category.booksCount}</span>
           </NavLink>
         </li>
       ))}

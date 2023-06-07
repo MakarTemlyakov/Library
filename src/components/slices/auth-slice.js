@@ -73,6 +73,12 @@ const authSlice = createSlice({
       newState.errorResponse = null;
     },
 
+    initUser: (state, action) => {
+      const newState = state;
+
+      newState.user = JSON.parse(localStorage.getItem('user'));
+    },
+
     removeSuccess: (state, action) => {
       const newState = state;
 
@@ -117,7 +123,10 @@ const authSlice = createSlice({
       newState.successResponse = action.payload.status;
       newState.user = { ...action.payload.userData.user };
       newState.userToken = action.payload.userData.jwt;
+
       newState.isAuth = true;
+      localStorage.setItem('user', JSON.stringify(newState.user));
+
       localStorage.setItem('jwt', newState.userToken);
       newState.isLoading = false;
     });
@@ -180,7 +189,7 @@ const authSlice = createSlice({
 
 const { reducer } = authSlice;
 
-export const { removeError, removeSuccess, logout } = authSlice.actions;
+export const { removeError, removeSuccess, logout, initUser } = authSlice.actions;
 
 // eslint-disable-next-line import/no-default-export
 export default reducer;

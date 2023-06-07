@@ -88,7 +88,9 @@ export const LoginForm = ({ setUserData }) => {
             {isInvalidCredentials ? (
               <Fragment>
                 <span className={`${styles.help} ${styles.error}`}>Неверный логин или пароль!</span>
-                <span className={styles.help}>Восстановить?</span>
+                <Link to='/forgot-pass' className={styles.help}>
+                  Восстановить?
+                </Link>
               </Fragment>
             ) : (
               <span className={styles.help}>Забыли логин или пароль?</span>
@@ -100,9 +102,7 @@ export const LoginForm = ({ setUserData }) => {
             Вход
           </Button>
           <div className={styles.groupLinks}>
-            <Link to='#' className={styles.link}>
-              Нет учётной записи?
-            </Link>
+            <span className={styles.link}>Нет учётной записи?</span>
             <Link to='/register' className={`${styles.link} ${styles.exit}`}>
               Регистрация
             </Link>

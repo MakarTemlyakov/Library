@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 
 import { isBiggerLatter, isCharNumber, isEmail, isPhone, minLength, strLatinAlphabet } from '../../../utils/validation';
 import { Button } from '../../button';
-import { Message } from '../../message/message';
 import { Modal } from '../../modal/modal';
 import { authRegister } from '../../slices/auth-slice';
 
@@ -235,9 +234,7 @@ export const RegisterForm = ({ setUserData }) => {
             {textButton}
           </Button>
           <div className={styles.groupLinks}>
-            <Link to='#' className={styles.link}>
-              Есть учётная запись?
-            </Link>
+            <span className={styles.link}>Есть учётная запись?</span>
             <Link to='/login' className={`${styles.link} ${styles.exit}`}>
               войти
             </Link>

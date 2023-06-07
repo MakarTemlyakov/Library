@@ -1,7 +1,6 @@
-import { Fragment, useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import cn from 'classnames';
 
-import bookiMG from '../../assets/img/111.png';
 import noImg from '../../assets/img/no-image.svg';
 import { Button } from '../button';
 import { StarIcon } from '../icons/star/star-icon';
@@ -16,11 +15,10 @@ export const CardBook = ({
   title,
   bookedTill,
   year,
+  image,
   isBooked,
   searchBookValue,
 }) => {
-  const [highlightWord, setHighlightWord] = useState(title);
-
   const cardClass = cn(styles.bookCard, {
     [styles.bookCardViewList]: isListView,
     [styles.bookCardViewTile]: !isListView,
@@ -70,24 +68,24 @@ export const CardBook = ({
   return (
     <article className={cardClass} data-test-id='card'>
       <div className={cardImgWrapper}>
-        <img className={isHasImg == null ? styles.noImg : ''} src={isHasImg !== null ? bookiMG : noImg} alt='' />
+        <img className={isHasImg == null ? styles.noImg : ''} src={isHasImg !== null ? image.url : noImg} alt='' />
       </div>
       <div className={infoWrapper}>
         {rating > 0 ? (
           <ul className={ratingStart}>
-            <li>
+            <li key={1}>
               <StarIcon isReview={true} />
             </li>
-            <li>
+            <li key={2}>
               <StarIcon isReview={true} />
             </li>
-            <li>
+            <li key={3}>
               <StarIcon isReview={true} />
             </li>
-            <li>
+            <li key={4}>
               <StarIcon isReview={true} />
             </li>
-            <li>
+            <li key={5}>
               <StarIcon />
             </li>
           </ul>

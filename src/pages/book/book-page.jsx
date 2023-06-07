@@ -7,22 +7,44 @@ import { Button } from '../../components/button/button';
 import { Comment } from '../../components/comment/comment';
 import { Loader } from '../../components/loader/loader';
 import { Rating } from '../../components/rating/rating';
-import { fetchBooksById } from '../../components/slices/navigation-slice';
+import { createBooking } from '../../components/slices/booking-slice';
+import { fetchBooksById } from '../../components/slices/books-slice';
 import { Slider } from '../../components/slider/slider';
 import { ToastMessage } from '../../components/toastmessage/testmessage';
 
 import styles from './book-page.module.css';
 
 export function BookPage() {
-  const { bookId } = useParams();
+  const patch = useParams();
   const dispatch = useDispatch();
-  const { isError, isLoading, book } = useSelector((state) => state.navigation);
+  const { isError, isLoading } = useSelector((state) => state.books);
 
+  const { book } = useSelector((state) => state.books);
+  const { user } = useSelector((state) => state.auth);
   const [isShowCommentMode, setCommentMode] = useState(false);
 
+  const [isBooking, setBooking] = useState(false);
+
+  const onCreateBooking = () => {
+    const bookingDate = new Date().toISOString();
+    const { bookId } = patch;
+
+    const bookingData = {
+      order: true,
+      dateOrder: bookingDate,
+      book: +bookId,
+      customer: user.id,
+    };
+
+    dispatch(createBooking(bookingData));
+  };
+
   useEffect(() => {
-    dispatch(fetchBooksById(bookId));
-  }, [dispatch, bookId]);
+    dispatch(fetchBooksById(patch.bookId));
+  }, [dispatch, patch.bookId]);
+
+  const isBookBooking = book && book.booking && book.booking.customerId === user.id;
+  const isDisabledBooking = book && book.booking && book.booking.customerId !== user.id;
 
   return isLoading ? (
     <Loader />
@@ -32,7 +54,7 @@ export function BookPage() {
     <section className={styles.bookPage} data-test-id='book-page'>
       {book !== null && (
         <div className='container'>
-          <Breadcrumbs />
+          <Breadcrumbs title={book.title} categories={book.categories} />
           <div className={styles.columnLayout}>
             <div className={styles.columnWapper}>
               <Slider images={book.images} />
@@ -45,8 +67,13 @@ export function BookPage() {
               </time>
             </span>
             <div className={styles.bookBooking}>
-              <Button size='large' color='secondary'>
-                Забронировать
+              <Button
+                size='large'
+                color={isBookBooking ? 'secondary' : 'primary'}
+                onClick={onCreateBooking}
+                isDisabled={isDisabledBooking}
+              >
+                {book.booking === null ? 'Забронировать' : book.delivery !== null ? 'Занята' : 'Забронирована'}
               </Button>
             </div>
             <div className={styles.bookAbout}>

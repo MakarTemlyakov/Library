@@ -1,27 +1,36 @@
 import axios from 'axios';
 
+const baseUrl = 'https://library-cleverland-2jfze.ondigitalocean.app';
+
 const instance = axios.create({
-  baseURL: 'https://strapi.cleverland.by',
+  baseURL: baseUrl,
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
 
 instance.interceptors.request.use(
   (config) => {
-    const newConfig = config;
-
     const token = localStorage.getItem('jwt');
 
     if (token) {
-      newConfig.headers.Authorization = `Bearer ${token}`;
+      return {
+        ...config,
+        headers: {
+          ...config.headers,
+          Authorization: `Bearer ${token}`,
+        },
+      };
     }
 
-    return newConfig;
+    return config;
   },
   (error) => Promise.reject(error)
 );
 
 export const libraryAPI = {
   fetchCategories: async () => {
-    const response = await instance.get('/api/categories', { crossdomain: true });
+    const response = await instance.get('/api/categories');
 
     return response;
   },
@@ -37,13 +46,29 @@ export const libraryAPI = {
   },
 
   fetchBooks: async () => {
-    const response = await instance.get('/api/books', { crossdomain: true });
+    let response = null;
+
+    try {
+      response = await instance.get('/api/books');
+    } catch (error) {
+      console.log(error);
+    }
 
     return response;
   },
 
   fetchBookById: async (bookId) => {
-    const response = await instance.get(`/api/books/${bookId}`, { crossdomain: true });
+    let response = null;
+
+    try {
+      response = await instance.get(`/api/books/${bookId}`, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
 
     return response;
   },
@@ -62,20 +87,28 @@ export const libraryAPI = {
   },
 
   signIn: async (user) => {
-    const response = await instance.post(
-      '/api/auth/local',
-      {
-        identifier: user.username,
-        password: user.password,
-      },
-      { crossdomain: true }
-    );
+    const response = await instance.post('/api/auth/local', {
+      identifier: user.username,
+      password: user.password,
+    });
 
     return response;
   },
 
   forgotPassword: async (email) => {
-    const response = await instance.post('/api/auth/forgot-password', { email });
+    let response = null;
+
+    try {
+      response = await instance.post('/api/auth/forgot-password', email);
+    } catch (error) {
+      console.log(error);
+    }
+
+    return response;
+  },
+
+  bookingBook: async (data) => {
+    const response = await instance.post('/api/bookings', { data });
 
     return response;
   },

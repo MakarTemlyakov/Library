@@ -45,10 +45,6 @@
   height: 100%;
 }
 
-.bookCards {
-  flex-grow: 1;
-}
-
 .controlPanelBooks {
   display: flex;
   justify-content: flex-end;

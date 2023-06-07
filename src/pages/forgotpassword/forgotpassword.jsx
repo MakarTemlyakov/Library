@@ -1,5 +1,6 @@
+import React from 'react';
 import { useSelector } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { ForgotPasswordForm } from '../../components/forms/forgotpassword/forgotpassword';
 import { Message } from '../../components/message/message';
@@ -10,6 +11,14 @@ import styles from './forgotpassword.module.css';
 export const ForgotPassword = () => {
   const { isSuccess } = useSelector((state) => state.auth);
   const [searchParams] = useSearchParams();
+  const userToken = localStorage.getItem('jwt');
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    if (userToken) {
+      navigate('/');
+    }
+  }, [userToken, navigate]);
 
   if (searchParams.get('code')) {
     const code = searchParams.get('code');

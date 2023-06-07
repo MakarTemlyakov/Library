@@ -39,11 +39,11 @@ export const Slider = ({ images }) => {
         {images?.length > 0 ? (
           images.map((slide) => (
             <SwiperSlide key={slide.id}>
-              <img src={`https://strapi.cleverland.by${slide.url}`} alt='' />
+              <img src={slide.url} alt='' />
             </SwiperSlide>
           ))
         ) : (
-          <SwiperSlide>
+          <SwiperSlide key={1}>
             <img src={noImg} alt='' width={56} height={56} className={styles.noImg} />
           </SwiperSlide>
         )}
@@ -65,7 +65,7 @@ export const Slider = ({ images }) => {
         >
           {images.map((slide) => (
             <SwiperSlide key={slide.id} data-test-id='slide-mini'>
-              <img src={`https://strapi.cleverland.by${slide.url}`} alt='' />
+              <img src={slide.url} alt='' />
             </SwiperSlide>
           ))}
         </Swiper>
